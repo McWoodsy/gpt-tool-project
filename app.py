@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request
 from openai import OpenAI
 import json
+from dotenv import dotenv_values
 #from matplotlib import graph
 
+config=dotenv_values(".env")
+
+client = OpenAI(api_key=config["OPENAPI_KEY"])
 
 
 app = Flask(__name__,
