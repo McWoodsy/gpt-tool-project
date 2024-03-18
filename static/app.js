@@ -5,6 +5,13 @@ const form = document.querySelector("#form");
       getColors();
     });
 
+//  This is for triggering the table generation
+// const chart_form = document.querySelector("#chart_form");
+//     form.addEventListener("submit", function (e) {
+//       e.preventDefault();
+//       getColors();
+//     });
+
 //  Performs the POST request
 function getColors() {
     const query = form.elements.query.value;
@@ -25,26 +32,26 @@ function getColors() {
       });
 }
 
-// For the table
-function getInfo() {
-  // Need to find a way to create a list instead of just getting a single value from the form
-  const query = form.elements.query.value;
-    fetch("/palette", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({
-        query: query
-      })
-    })
-    .then((response) => response.json())
-    .then(data => {
-      const color_array = data;
-      const container = document.querySelector(".container");
-      createColorBoxes(color_array,container);
-    });
-}
+// // For the table
+// function getInfo() {
+//   // Need to find a way to create a list instead of just getting a single value from the form
+//   const query = form.elements.query.value;
+//     fetch("/bar-chart", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/x-www-form-urlencoded"
+//       },
+//       body: new URLSearchParams({
+//         query: query
+//       })
+//     })
+//     .then((response) => response.json())
+//     .then(data => {
+//       const color_array = data;
+//       const container = document.querySelector(".container");
+//       createColorBoxes(color_array,container);
+//     });
+// }
 
 //  Renders color boxes based on array size and contents
 function createColorBoxes(color_array,parent) {

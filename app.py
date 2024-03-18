@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 from openai import OpenAI
 import json
 from dotenv import dotenv_values
+import matplotlib.pyplot as plt
+
 #from matplotlib import graph
 
 config=dotenv_values(".env")
