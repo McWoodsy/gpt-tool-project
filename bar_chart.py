@@ -13,7 +13,7 @@ plt.ylabel('Values')
 plt.title('Bar Chart Example')
 
 # Save plot ot static folder
-plt.savefig('./static/images/bar_chart.png')
+plt.savefig('./gptgenerator/src/main/resources/static/images/my_bar_chart.png')
 
 # Show plot
 plt.show()
