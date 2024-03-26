@@ -47,28 +47,55 @@ def get_colors(text):
     max_tokens = 200)
     return response.choices[0].message.content
 
-#   Completion call that returns a serialized JSON file of options as keys and then terms-info pairs as the value
-#   CONCEPT SHOULD BE THE KEY
-def get_table_info(option_list, concept_list):
-    #   Creating a string from the list so that it can be passed in at once to the GPT 
-    formatted_concept_list = ""
-    formatted_option_list = ""
-    for concept in concept_list:
-        formatted_concept_list.append(concept + ", ")
-    for option in option_list:
-        formatted_option_list.append(option + ", ")  
-        
+#   Competion call that returns a serialized JSON with title as key and key value pairs as value
+def get_chart_info(option_list, metric):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
     messages=[
     {"role": "system", "content": """
-    YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve a list of concepts. You will also recieve a list of options. You will compare each option
-    to eachother in terms of the concepts provided. Your output format should be the concepts as keys, and then a key value pair of options and its corresponding
-    information.
+    YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve a metric. You will also recieve a list of options. You will compare each option
+    to eachother in terms of the metric. Your output format should be the concepts as keys, and then a key value pair of options and its corresponding
+    metric information as an integer.
     """},
-    {"role": "user", "content": " in terms of " + concept_list + " compare " + option_list},
+    {"role": "user", "content": " in terms of " + metric + " compare " + option_list},
     ],
     max_tokens = 200)
     return response.choices[0].message.content
+
+#   Generates bar chart and saves to Spring Boot static folder
+def create_bar_chart(categories, values):
+    
+    ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function
+    
+    # Sample data
+    categories = ['A', 'B', 'C', 'D']
+    values = [10, 20, 15, 25]
+
+    # Create bar chart
+    plt.figure(figsize=(8, 6))  # Adjust figure size for better visualization
+    bars = plt.bar(categories, values)
+
+    # Add data labels on top of each bar
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, yval + 0.5, round(yval, 1), ha='center', color='black', fontsize=10)
+
+    # Add grid lines for better readability
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+    # Add labels and title
+    plt.xlabel('Categories', fontsize=12, fontname='Arial')  # Change font to Arial
+    plt.ylabel('Values', fontsize=12, fontname='Arial')      # Change font to Arial
+    plt.title('Bar Chart Example', fontsize=14, fontname='Arial')  # Change font to Arial
+
+    # Customize ticks and tick labels
+    plt.xticks(fontsize=10, fontname='Arial')  # Change font to Arial
+    plt.yticks(fontsize=10, fontname='Arial')  # Change font to Arial
+
+    # Save plot to static folder
+    plt.savefig('./gptgenerator/src/main/resources/static/images/my_bar_chart.png')
+
+    # Show plot
+    plt.show()
 
 
 if __name__ == "__main__":
