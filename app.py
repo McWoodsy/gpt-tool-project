@@ -3,8 +3,9 @@ from openai import OpenAI
 import json
 from dotenv import dotenv_values
 from threading import Thread
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-
 #from matplotlib import graph
 
 config=dotenv_values(".env")
@@ -83,7 +84,7 @@ def get_chart_info(option_list, metric):
 def create_bar_chart(bar_chart_JSON, metric):    
     ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function  
     print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n")
-    bar_chart_JSON = json.loads(bar_chart_JSON)  # Correct way to parse JSON string
+  #  bar_chart_JSON = json.loads(bar_chart_JSON)  # Correct way to parse JSON string
     values = list(bar_chart_JSON[metric].values())
     options = list(bar_chart_JSON[metric].keys())
     # Create bar chart
