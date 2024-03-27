@@ -6,6 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Color Palette Generator</title>
   <link rel="stylesheet" href="static/app.css">
+  <style>
+
+  </style>
 </head>
 <body>
   <h1 style="font-size: 30px;">
@@ -16,9 +19,11 @@
     </form>
     <p style="font-size: 30px;">Or enter 2 or more options and a metric to create a simple bar chart</p>
     <form id="chart_form" class="bar_chart_form">
-      <input type="text" name="options">
-      <input type="text" name="metric">
-      <button class="button">Bar Chart</button>
+      <label for="metric" style="font-size: 18px;">Metric:</label>
+      <input type="text" name="metric" id="metric">
+      <label for="options" style="font-size: 18px;">Options:</label>
+      <input title="Options" type="text" name="options" id="options">
+      <button class="button" style="width: 100px; text-align: center">Generate</button>
     </form>
     <h3>(click on a shade to copy its hexadecimal value to your clipboard)</h3>
   </h1>

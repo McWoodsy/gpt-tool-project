@@ -6,12 +6,10 @@ from threading import Thread
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-#from matplotlib import graph
 
 config=dotenv_values(".env")
 
 client = OpenAI(api_key=config["OPENAPI_KEY"])
-
 
 app = Flask(__name__,
             template_folder = 'templates',
@@ -89,31 +87,29 @@ def get_chart_info(option_list, metric):
 #   Generates bar chart and saves to Spring Boot static folder
 def create_bar_chart(bar_chart_JSON, metric):    
     ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function  
-    print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n")
-  #  bar_chart_JSON = json.loads(bar_chart_JSON)  # Correct way to parse JSON string
+    print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n") # For validation
     values = list(bar_chart_JSON[metric].values())
     options = list(bar_chart_JSON[metric].keys())
+    options = [option.capitalize() for option in options]
+
     # Create bar chart
     plt.figure(figsize=(8, 6))  # Adjust figure size for better visualization
     bars = plt.bar(options, values)
-    # Add data labels on top of each bar
-    for bar in bars:
-        yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2, yval + 0.5, round(yval, 1), ha='center', color='black', fontsize=10)
     # Add grid lines for better readability
     plt.grid(axis='y', linestyle='--', alpha=0.7)
-    # Add labels and title
-    plt.xlabel('Categories', fontsize=12, fontname='Arial')
-    plt.ylabel('Values', fontsize=12, fontname='Arial')    
-    plt.title(metric, fontsize=14, fontname='Arial')
+    # Add labels and title (capitalized)
+    plt.xlabel('', fontsize=12, fontname='Arial')
+    plt.ylabel('', fontsize=12, fontname='Arial')    
+    plt.title(metric.title(), fontsize=14, fontname='Arial')  # Capitalize the title
+    # Capitalize labels of each bar
+    for bar in bars:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width() / 2, height, '%d' % int(height), ha='center', va='bottom')
     # Customize ticks and tick labels
     plt.xticks(fontsize=10, fontname='Arial')
     plt.yticks(fontsize=10, fontname='Arial')
     # Save plot to static folder
     plt.savefig('./gptgenerator/src/main/resources/static/images/my_bar_chart.png')
-    # Show plot
-    #plt.show()
-
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
