@@ -48,7 +48,14 @@ function getChartInfo() {
 // Displays the chart image
 function showChart(chartImageUrl) {
   const chartImg = document.getElementById("chart-img");
+  const newWidth = 400 * 2; // Set your desired width
+  const newHeight = 300 * 2; // Set your desired height
+  chartImg.style.width = newWidth + "px";
+  chartImg.style.height = newHeight + "px";
   chartImg.src = "./static/images/my_bar_chart.png";
+  chartImg.style.marginLeft = "auto";
+  chartImg.style.marginRight = "auto";
+  chartImg.style.display = "block";
 }
 
 
