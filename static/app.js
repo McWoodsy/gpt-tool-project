@@ -5,12 +5,43 @@ const form = document.querySelector("#form");
       getColors();
     });
 
-//  This is for triggering the table generation
-// const chart_form = document.querySelector("#chart_form");
-//     form.addEventListener("submit", function (e) {
-//       e.preventDefault();
-//       getColors();
-//     });
+//  Execute showChart() when submit button is clicked
+const chartForm = document.querySelector("#chart_form");
+  chartForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    getChartInfo();
+  });
+
+// Performs the POST request for fetching chart information
+function getChartInfo() {
+  const options = chartForm.elements.options.value;
+  const metric = chartForm.elements.metric.value;
+  
+  fetch("/bar-chart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: new URLSearchParams({
+      options: options,
+      metric: metric
+    })
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.text();
+  })
+  .then(data => {
+    // Output response text to the console
+    console.log(data);
+  })
+  .catch(error => {
+    console.error("There was a problem with the fetch operation:", error);
+  });
+}
+
 
 //  Performs the POST request
 function getColors() {
@@ -31,27 +62,6 @@ function getColors() {
         createColorBoxes(color_array,container);
       });
 }
-
-// // For the table
-// function getInfo() {
-//   // Need to find a way to create a list instead of just getting a single value from the form
-//   const query = form.elements.query.value;
-//     fetch("/bar-chart", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/x-www-form-urlencoded"
-//       },
-//       body: new URLSearchParams({
-//         query: query
-//       })
-//     })
-//     .then((response) => response.json())
-//     .then(data => {
-//       const color_array = data;
-//       const container = document.querySelector(".container");
-//       createColorBoxes(color_array,container);
-//     });
-// }
 
 //  Renders color boxes based on array size and contents
 function createColorBoxes(color_array,parent) {

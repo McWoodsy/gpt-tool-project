@@ -50,6 +50,14 @@ h1 {
     margin-bottom: 20px;
     text-align: center;
   }
+  .chart_options_form {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .chart_metric_form {
+    margin-bottom: 20px;
+    text-align: center;
+  }
 
   .button {
     margin-bottom: 20px;

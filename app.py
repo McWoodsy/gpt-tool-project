@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from openai import OpenAI
 import json
 from dotenv import dotenv_values
+from threading import Thread
 import matplotlib.pyplot as plt
 
 #from matplotlib import graph
@@ -24,12 +25,28 @@ def prompt_to_palette():
     #   Completion call
     query = request.form.get("query")
     color_array = get_colors(query)
-    return json.loads(color_array)
+    return json.loads(color_array) # NOT serialized in the funciton so we do it here before returning
 
 @app.route("/bar-chart", methods=["POST"])
 def prompt_to_bar_chart():
     ####### How do we pass in the JSON???
-    return
+    options = request.form.get("options")
+    metric = request.form.get("metric")
+    bar_chart_JSON = get_chart_info(options, metric)
+    #print("\n\n\n"+bar_chart_JSON+"\n\n\n")
+    create_bar_chart(bar_chart_JSON, metric)
+    return "bar chart created" 
+'''
+@app.route("/bar-chart", methods=["POST"])
+def prompt_to_bar_chart():
+    ####### How do we pass in the JSON???
+    options = request.form.get("options")
+    metric = request.form.get("metric")
+    # Execute Matplotlib operations in a separate thread
+    thread = Thread(target=create_bar_chart, args=(metric, options))
+    thread.start()
+    return "bar chart created" 
+'''
 
 #################
 
@@ -59,18 +76,19 @@ def get_chart_info(option_list, metric):
     {"role": "user", "content": " in terms of " + metric + " compare " + option_list},
     ],
     max_tokens = 200)
-    return response.choices[0].message.content
+    print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
+    return json.loads(response.choices[0].message.content)
 
 #   Generates bar chart and saves to Spring Boot static folder
 def create_bar_chart(bar_chart_JSON, metric):    
     ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function  
-     
-    # Sample data
-    categories = ['A', 'B', 'C', 'D']
-    values = [10, 20, 15, 25]
+    print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n")
+    bar_chart_JSON = json.loads(bar_chart_JSON)  # Correct way to parse JSON string
+    values = list(bar_chart_JSON[metric].values())
+    options = list(bar_chart_JSON[metric].keys())
     # Create bar chart
     plt.figure(figsize=(8, 6))  # Adjust figure size for better visualization
-    bars = plt.bar(categories, values)
+    bars = plt.bar(options, values)
     # Add data labels on top of each bar
     for bar in bars:
         yval = bar.get_height()
@@ -87,7 +105,7 @@ def create_bar_chart(bar_chart_JSON, metric):
     # Save plot to static folder
     plt.savefig('./gptgenerator/src/main/resources/static/images/my_bar_chart.png')
     # Show plot
-    plt.show()
+    #plt.show()
 
 
 if __name__ == "__main__":
