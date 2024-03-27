@@ -72,7 +72,13 @@ def get_chart_info(option_list, metric):
     {"role": "system", "content": """
     YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve a metric. You will also recieve a list of options. You will compare each option
     to eachother in terms of the metric. Your output format should be the concepts as keys, and then a key value pair of options and its corresponding
-    metric information as an integer.
+    metric information as an integer. RESPONSE SHOULD BE IN LOWER CASE. Here is an example:
+    {
+    "metric": {
+        "option 1": integer,
+        "option 2": integer
+    }
+}
     """},
     {"role": "user", "content": " in terms of " + metric + " compare " + option_list},
     ],

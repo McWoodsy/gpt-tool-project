@@ -34,15 +34,22 @@ function getChartInfo() {
     return response.text();
   })
   .then(data => {
-    // Output response text to the console
-    console.log(data);
+    // Check if the response is "bar chart created"
+    if (data === "bar chart created") {
+      showChart(); // If so, display the chart
+    }
   })
   .catch(error => {
     console.error("There was a problem with the fetch operation:", error);
   });
-  // showChart();
+  showChart();
 }
 
+// Displays the chart image
+function showChart(chartImageUrl) {
+  const chartImg = document.getElementById("chart-img");
+  chartImg.src = "gptgenerator/src/main/resources/static/images/my_bar_chart.png";
+}
 
 //  Performs the POST request
 function getColors() {
