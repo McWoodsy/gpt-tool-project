@@ -48,8 +48,14 @@ function getChartInfo() {
 // Displays the chart image
 function showChart(chartImageUrl) {
   const chartImg = document.getElementById("chart-img");
-  chartImg.src = "gptgenerator/src/main/resources/static/images/my_bar_chart.png";
+  chartImg.src = "./static/images/my_bar_chart.png";
 }
+
+
+
+
+
+
 
 //  Performs the POST request
 function getColors() {
