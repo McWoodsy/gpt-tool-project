@@ -34,15 +34,17 @@ function getChartInfo() {
     return response.text();
   })
   .then(data => {
-    // Check if the response is "bar chart created"
     if (data === "bar chart created") {
-      showChart(); // If so, display the chart
+      //return sleep(100);
     }
+  })
+  .then(() => {
+    // After the delay, show the chart
+    showChart();
   })
   .catch(error => {
     console.error("There was a problem with the fetch operation:", error);
   });
-  showChart();
 }
 
 // Displays the chart image
@@ -100,5 +102,9 @@ function createColorBoxes(color_array,parent) {
         div.appendChild(span);
         parent.appendChild(div);
     }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 

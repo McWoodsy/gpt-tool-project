@@ -39,6 +39,7 @@ h1 {
     position: absolute; 
     top: 0; 
     right: 0; 
+    align-items: center;
   }
 
   .color {
