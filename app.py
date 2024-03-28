@@ -111,7 +111,6 @@ def create_bar_chart(bar_chart_JSON, metric):
     plt.yticks(fontsize=10, fontname='Arial')
     # Save plot to static folder
     #plt.savefig('./gptgenerator/src/main/resources/static/images/my_bar_chart.png')
-    time.sleep(2)
     plt.savefig('./static/images/my_bar_chart.png')
     
 if __name__ == "__main__":
