@@ -1,14 +1,7 @@
 from flask import Flask, render_template, request
-from openai import OpenAI
-import json
-from dotenv import dotenv_values
-from threading import Thread
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import time
 import completion_calls
 import render_charts
+import json
 
 app = Flask(__name__,
             template_folder = 'templates',

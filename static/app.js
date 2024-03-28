@@ -50,6 +50,7 @@ function getChartInfo() {
 // Displays the chart image
 function showChart(chartImageUrl) {
   const chartImg = document.getElementById("chart-img");
+  chartImg.src = "";
   const newWidth = 400 * 2; // Set your desired width
   const newHeight = 300 * 2; // Set your desired height
   chartImg.style.width = newWidth + "px";
@@ -59,10 +60,6 @@ function showChart(chartImageUrl) {
   chartImg.style.marginRight = "auto";
   chartImg.style.display = "block";
 }
-
-
-
-
 
 
 

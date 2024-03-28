@@ -26,6 +26,10 @@ def create_bar_chart(bar_chart_JSON, metric):
         plt.text(bar.get_x() + bar.get_width() / 2, height, '%d' % int(height), ha='center', va='bottom', color='white', fontweight='bold')  # Set text color to white and make it bold    
     plt.xticks(fontsize=10, fontname='Arial', color='white', fontweight='bold')
     plt.yticks(fontsize=10, fontname='Arial', color='white', fontweight='bold') 
+    plt.gca().spines['top'].set_color('white')
+    plt.gca().spines['bottom'].set_color('white')
+    plt.gca().spines['left'].set_color('white')
+    plt.gca().spines['right'].set_color('white')
     # Save plot to static folder
     plt.savefig('./static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')  # Set background color and save with tight bounding box
     plt.close()
