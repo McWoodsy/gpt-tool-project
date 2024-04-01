@@ -8,25 +8,15 @@
   <link rel="stylesheet" href="static/app.css">
 </head>
 <body>
-  <h1 style="font-size: 30px;">
-    Enter keywords to generate a color palette
-    <form id="form" class="form">
-      <input type="text" name="query">
-      <button class="button">Show</button>
-    </form>
-    <p style="font-size: 30px;">Or enter 2 or more options and a metric to create a simple bar chart</p>
-    <form id="chart_form" class="bar_chart_form">
-      <label for="metric" style="font-size: 18px;">Metric:</label>
-      <input type="text" name="metric" id="metric">
-      <label for="options" style="font-size: 18px;">Options:</label>
-      <input title="Options" type="text" name="options" id="options">
-      <button class="button2" style="width: 100px; text-align: center">Generate</button>
-    </form>
-    <h3>(click on a shade to copy its hexadecimal value to your clipboard)</h3>
-  </h1>
-  <div class="container">
-    <img id="chart-img" src="" >
-  </div>
+<h4 style="font-size:75px"> Micky McWoodsy's big ol' fancy web app </h4>
+  <h5 style="font-size: 30px;">
+Pick a tool to use:
+<p>
+<a href="/bar_chart" class="link" style="width: 100px; text-align: center">ChartGPT</button></p>
+<p>
+<a href="/color_palette"class="link" style="width: 100px; text-align: center">Color Theme Creator</button>
+</p>
+  </h5>
   <script src="static/app.js"></script>
 </body>
 </html>

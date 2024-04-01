@@ -2,6 +2,12 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import json
+from dotenv import dotenv_values
+
+
+color_config=dotenv_values("theme.env")
+
+
 
 
 def create_bar_chart(bar_chart_JSON, metric):    
@@ -33,3 +39,12 @@ def create_bar_chart(bar_chart_JSON, metric):
     # Save plot to static folder
     plt.savefig('./static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')  # Set background color and save with tight bounding box
     plt.close()
+    
+def create_pie_chart(pie_chart_JSON, group, criteria): #    
+    return
+
+def create_table():
+    return
+
+def create_graph(): # do we need a seperate funciton for correlation graphs?
+    return
