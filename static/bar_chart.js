@@ -27,18 +27,18 @@ console.log(currentPage)
 
 //  Original code: **{
 // //  Execute getColors() when submit button is clicked
-const form = document.querySelector("#form");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      getColors();
-    });
+// const form = document.querySelector("#form");
+//     form.addEventListener("submit", function (e) {
+//       e.preventDefault();
+//       getColors();
+//     });
 
 // //  Execute showChart() when submit button is clicked
-// const chartForm = document.querySelector("#chart_form");
-//   chartForm.addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     getChartInfo();
-//   });  //**
+const chartForm = document.querySelector("#chart_form");
+  chartForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    getChartInfo();
+  });  //**
 
 // Performs the POST request for fetching chart information
 function getChartInfo() {
@@ -68,7 +68,9 @@ function getChartInfo() {
   })
   .then(() => {
     // After the delay, show the chart
+    
     showChart();
+    
   })
   .catch(error => {
     console.error("There was a problem with the fetch operation:", error);
@@ -79,6 +81,8 @@ function getChartInfo() {
 function showChart(chartImageUrl) {
   const chartImg = document.getElementById("chart-img");
   chartImg.src = "";
+  window.location.reload();
+
   const newWidth = 400 * 2; // Set your desired width
   const newHeight = 300 * 2; // Set your desired height
   chartImg.style.width = newWidth + "px";

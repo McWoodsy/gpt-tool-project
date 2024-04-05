@@ -19,6 +19,8 @@ def bar_chart():
 def color_palette():
     return render_template("/color_palette.html")
 
+
+#   MAYBE SOMEWHERE INTHIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
 @app.route("/palette", methods=["POST"])
 def prompt_to_palette():
     #   Completion call
