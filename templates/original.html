@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Color Palette Generator</title>
+  <link rel="stylesheet" href="static/app.css">
+</head>
+<body>
+  <h1 style="font-size: 30px;">
+    Enter keywords to generate a color palette
+    <form id="form" class="form">
+      <input type="text" name="query">
+      <button class="button">Show</button>
+    </form>
+    <p style="font-size: 30px;">Or enter 2 or more options and a metric to create a simple bar chart</p>
+    <form id="chart_form" class="bar_chart_form">
+      <label for="metric" style="font-size: 18px;">Metric:</label>
+      <input type="text" name="metric" id="metric">
+      <label for="options" style="font-size: 18px;">Options:</label>
+      <input title="Options" type="text" name="options" id="options">
+      <button class="button2" style="width: 100px; text-align: center">Generate</button>
+    </form>
+    <h3>(click on a shade to copy its hexadecimal value to your clipboard)</h3>
+  </h1>
+  <div class="container">
+    <img id="chart-img" src="" >
+  </div>    
+  <script src="static/app.js"></script>
+</body>
+</html>

@@ -11,12 +11,22 @@ app = Flask(__name__,
 def index():
     return render_template("index.html")
 
+@app.route("/bar_chart")
+def bar_chart():
+    return render_template("bar_chart.html")
+
+@app.route("/color_palette")
+def color_palette():
+    return render_template("/color_palette.html")
+
+
+#   MAYBE SOMEWHERE INTHIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
 @app.route("/palette", methods=["POST"])
 def prompt_to_palette():
     #   Completion call
     query = request.form.get("query")
     color_array = completion_calls.get_colors(query)
-    return json.loads(color_array) # NOT serialized in the funciton so we do it here before returning
+    return json.loads(color_array) # NOT serialized in the function so we do it here before returning
 
 @app.route("/bar-chart", methods=["POST"])
 def prompt_to_bar_chart():
