@@ -20,6 +20,10 @@ def bar_chart():
 def color_palette():
     return render_template("/color_palette.html")
 
+@app.route("/table_generator")
+def table_generator():
+    return render_template("/table_generator.html")
+
 
 #   MAYBE SOMEWHERE IN THIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
 @app.route("/palette", methods=["POST"])
@@ -35,10 +39,21 @@ def prompt_to_bar_chart():
     options = request.form.get("options")
     metric = request.form.get("metric")
     bar_chart_JSON = completion_calls.get_chart_info(options, metric)
+    # Write to static folder before rendering
     with open("static/json/table_data.json", "w") as file:
         json.dump(bar_chart_JSON, file)
     render_charts.create_bar_chart(bar_chart_JSON, metric)
     return "bar chart created" 
+
+@app.route("/table-generator", methods=["POST"])
+def prompt_to_table():
+    characteristics = request.form.get("characteristics")
+    options = request.form.get("options")
+    table_JSON = completion_calls.get_table_info(options, characteristics)
+    # Write to static folder before rendering
+    with open("static/json/tables.json", "w") as file:
+        json.dump(table_JSON, file)
+    return json.loads(table_JSON)
 
 #################
     

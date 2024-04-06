@@ -45,6 +45,7 @@ function getChartInfo() {
   const options = chartForm.elements.options.value;
   const metric = chartForm.elements.metric.value;
   
+  //  Here is where comms with python API start
   fetch("/bar-chart", {
     method: "POST",
     headers: {
@@ -66,9 +67,7 @@ function getChartInfo() {
       //return sleep(100);
     }
   })
-  .then(() => {
-    // After the delay, show the chart
-    
+  .then(() => {    
     showChart();
     
   })
