@@ -21,7 +21,7 @@ def color_palette():
     return render_template("/color_palette.html")
 
 
-#   MAYBE SOMEWHERE IN xTHIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
+#   MAYBE SOMEWHERE IN THIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
 @app.route("/palette", methods=["POST"])
 def prompt_to_palette():
     #   Completion call
