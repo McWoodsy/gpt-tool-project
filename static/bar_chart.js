@@ -81,8 +81,6 @@ function getChartInfo() {
 function showChart(chartImageUrl) {
   const chartImg = document.getElementById("chart-img");
   chartImg.src = "";
-  window.location.reload();
-
   const newWidth = 400 * 2; // Set your desired width
   const newHeight = 300 * 2; // Set your desired height
   chartImg.style.width = newWidth + "px";
