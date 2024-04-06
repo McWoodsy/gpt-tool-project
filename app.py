@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import completion_calls
 import render_charts
 import json
+import os
 
 app = Flask(__name__,
             template_folder = 'templates',
@@ -20,7 +21,7 @@ def color_palette():
     return render_template("/color_palette.html")
 
 
-#   MAYBE SOMEWHERE INTHIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
+#   MAYBE SOMEWHERE IN xTHIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
 @app.route("/palette", methods=["POST"])
 def prompt_to_palette():
     #   Completion call
@@ -34,6 +35,8 @@ def prompt_to_bar_chart():
     options = request.form.get("options")
     metric = request.form.get("metric")
     bar_chart_JSON = completion_calls.get_chart_info(options, metric)
+    with open("static/json/table_data.json", "w") as file:
+        json.dump(bar_chart_JSON, file)
     render_charts.create_bar_chart(bar_chart_JSON, metric)
     return "bar chart created" 
 
