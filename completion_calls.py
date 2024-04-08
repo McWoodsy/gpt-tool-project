@@ -7,6 +7,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import time
+import render_charts
 
 config=dotenv_values(".env")
 
@@ -52,9 +53,9 @@ def get_table_info(option_list, characteristics_list):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
         messages=[
         {"role": "system", "content": """
-        YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve one or more options. You will also recieve a list of characteristics. You will compare each option
-        to eachother in terms of each of the characteristics provided EXACTLY AS WORDED BY THE USER. Your output format should be each characteristic as a key, and then a key value pair of options and its corresponding
-        information (low word count please) as a string. RESPONSE SHOULD BE IN LOWER CASE. Here is an example:
+        YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve one or more options. You will also recieve a list of characteristics.
+        Your output format should be each characteristic as a key, and then a key value pair of options and its corresponding
+        information (low word count please) as a string or in numerics, whichever makes more sense. RESPONSE SHOULD BE IN LOWER CASE. Here is an example:
         {
         *characteristic*: {
             *option 1*: *information*,
@@ -66,6 +67,9 @@ def get_table_info(option_list, characteristics_list):
         ],
         max_tokens = 200)
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
-    return json.loads(response.choices[0].message.content)
+   # return json.loads(response.choices[0].message.content)
+    return response.choices[0].message.content
 
-#get_table_info("Germany, USA, Iraq", "life expectancy, gdp per capita, smoking rate")
+render_charts.create_table(
+get_table_info("france, england, germany", "gdp per capita, average salary in euros, years of existence")
+)

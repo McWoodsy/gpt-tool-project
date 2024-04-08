@@ -2,37 +2,6 @@
 const currentPage = window.location.pathname;
 console.log(currentPage)
 
-// // Execute different branches based on the current page
-// if (currentPage === currentPage + "/color_palette.html") {
-//   // Execute code specific to page1.html
-
-//   // For example:
-//   const form = document.querySelector("#form");
-//   form.addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     getColors();
-//   });
-// } else if (currentPage === "/bar_chart.html") {
-//   // Execute code specific to page2.html
-
-//   // For example:
-//   const chartForm = document.querySelector("#chart_form");
-//   chartForm.addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     getChartInfo();
-//   });
-// } else {
-//   // Default behavior for other pages
-// }
-
-//  Original code: **{
-// //  Execute getColors() when submit button is clicked
-// const form = document.querySelector("#form");
-//     form.addEventListener("submit", function (e) {
-//       e.preventDefault();
-//       getColors();
-//     });
-
 // //  Execute showChart() when submit button is clicked
 const chartForm = document.querySelector("#chart_form");
   chartForm.addEventListener("submit", function (e) {

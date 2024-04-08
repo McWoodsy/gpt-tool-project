@@ -48,11 +48,15 @@ def prompt_to_bar_chart():
 @app.route("/table-generator", methods=["POST"])
 def prompt_to_table():
     characteristics = request.form.get("characteristics")
+    print("CHARACTERISTICS   "+ characteristics)
     options = request.form.get("options")
+    print("OPTIONS         " + options)
     table_JSON = completion_calls.get_table_info(options, characteristics)
+    render_charts.create_table(table_JSON)
+    print(table_JSON)
     # Write to static folder before rendering
-    with open("static/json/tables.json", "w") as file:
-        json.dump(table_JSON, file)
+    #with open("static/json/tables.json", "w") as file:
+     #   json.dump(table_JSON, file)
     return json.loads(table_JSON)
 
 #################
