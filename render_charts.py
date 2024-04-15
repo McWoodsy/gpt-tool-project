@@ -71,6 +71,7 @@ def create_table(table_JSON):
 
     # Adjust layout to fit the table
     plt.subplots_adjust(left=0.2, top=0.8)
+    table.scale(4, 6)
     plt.savefig('./static/images/my_table.png')  # Save the table as an image
 
 
