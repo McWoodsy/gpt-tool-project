@@ -24,4 +24,9 @@ public class Term {
     public void setInformation(ArrayList<String> information) {
         this.information = information;
     }
+
+    public Term(ArrayList<String> options, ArrayList<String> information) {
+        this.options = options;
+        this.information = information;
+    }
 }

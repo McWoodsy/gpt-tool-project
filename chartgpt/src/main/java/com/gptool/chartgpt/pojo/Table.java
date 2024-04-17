@@ -14,6 +14,11 @@ public class Table {
         this.id = UUID.randomUUID().toString();
     } 
 
+    public Table(String id, ArrayList<Term> terms){
+        this.id = id;
+        this.terms = terms;
+    }
+
     public String getId() {
         return this.id;
     }
@@ -29,4 +34,6 @@ public class Table {
     public void setTerms(ArrayList<Term> terms) {
         this.terms = terms;
     }
+
+
 }

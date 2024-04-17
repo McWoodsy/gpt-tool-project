@@ -6,5 +6,6 @@ public interface TableService {
 
     Table getTable(String id);
     void saveTable(Table table);
+    void renderTable(Table table);
     
 }
