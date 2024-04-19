@@ -25,6 +25,9 @@ public class ToolController {
 
     @Autowired
     private TableService tableService;
+
+    @Autowired
+    private RestTemplate restTemplate;
     
     // @GetMapping("/")
     // public String index(Model model) {
@@ -42,14 +45,18 @@ public class ToolController {
     }
 
 
-
+    // Maybe this has to return a table object so we can build the Thymeleaf table?
     @PostMapping("/createTable/{characteristics}/{options}")
     public void createTable(@PathVariable String characteristics, @PathVariable String options) {
         String url = "http://127.0.0.1:5000/table-generator/"+ characteristics + "/"+ options;
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<JSONObject> response = restTemplate.postForEntity(url, null, JSONObject.class, characteristics, options);
-        String responseBody = response.getBody().toString();
+        //RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<JSONObject> response = restTemplate.postForEntity(url, null,JSONObject .class, characteristics, options);
+        System.out.println("\n\n\n\n JUST A CHECK\n\n\n\n" + response);
+        JSONObject responseBody = response.getBody();
+        System.out.println(responseBody);
+
         System.out.println("\n\n\n\nSPRINGBOOT RESPONSE BODY:    " + responseBody + "\n\n\n\n");
+        tableService.parseTableFromJSON((JSONObject)response.getBody());
         //  Render table()?
     } 
 }
