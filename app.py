@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for, redirect
 import completion_calls
 import render_charts
 import json
@@ -44,7 +44,7 @@ def prompt_to_bar_chart():
         json.dump(bar_chart_JSON, file)
     render_charts.create_bar_chart(bar_chart_JSON, metric)
     return "bar chart created" 
-
+'''
 @app.route("/table-generator", methods=["POST"])
 def prompt_to_table():
     characteristics = request.form.get("characteristics")
@@ -58,6 +58,20 @@ def prompt_to_table():
     #with open("static/json/tables.json", "w") as file:
      #   json.dump(table_JSON, file)
     return json.loads(table_JSON)
+'''
+
+@app.route("/table-generator/<characteristics>/<options>", methods=["POST"])
+def prompt_to_table(characteristics, options):
+    print("CHARACTERISTICS   "+ characteristics)
+    print("OPTIONS         " + options)
+    table_JSON = completion_calls.get_table_info(options, characteristics)
+    #render_charts.create_table(table_JSON)
+    # print(table_JSON)
+    # Write to static folder before rendering
+    #with open("static/json/tables.json", "w") as file:
+     #   json.dump(table_JSON, file)
+    #return redirect("http://127.0.0.1:8080/createTable", table_JSON)
+    return table_JSON
 
 #################
     
