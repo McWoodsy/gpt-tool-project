@@ -3,6 +3,7 @@ import completion_calls
 import render_charts
 import json
 import os
+import requests
 
 app = Flask(__name__,
             template_folder = 'templates',
@@ -62,16 +63,13 @@ def prompt_to_table():
 
 @app.route("/table-generator/<characteristics>/<options>", methods=["POST"])
 def prompt_to_table(characteristics, options):
-    print("CHARACTERISTICS   "+ characteristics)
-    print("OPTIONS         " + options)
+    print("\n\nCHARACTERISTICS   "+ characteristics)
+    print("\n\nOPTIONS         " + options)
     table_JSON = completion_calls.get_table_info(options, characteristics)
-    #render_charts.create_table(table_JSON)
-    # print(table_JSON)
-    # Write to static folder before rendering
-    #with open("static/json/tables.json", "w") as file:
-     #   json.dump(table_JSON, file)
-    #return redirect("http://127.0.0.1:8080/createTable", table_JSON)
-    return table_JSON
+    #return table_JSON
+    print(table_JSON)
+    requests.post("http://127.0.0.1:8080/getTable",json=json.loads(table_JSON))
+    return "\n\n Posted to Spring Boot endpoint\n\n"
 
 #################
     
