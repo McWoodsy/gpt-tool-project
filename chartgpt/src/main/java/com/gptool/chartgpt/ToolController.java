@@ -50,21 +50,21 @@ public class ToolController {
         return "error";
     }
 
-    // @PostMapping("/getTable")
-    // public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
+    @PostMapping("/getTable")
+    public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
 
 
-    //     System.out.println("\n\n\n\nSPRINGBOOT RESPONSE BODY:    " + jsonString + "\n\n\n\n");
+        System.out.println("\n\n\n\nSPRINGBOOT RESPONSE BODY:    " + jsonString + "\n\n\n\n");
 
-    //     JsonNode jsonObject = JSONutil.parse(jsonString);
+        JsonNode jsonObject = JSONutil.parse(jsonString);
 
-    //     System.out.println("\n\n\n\nSPRINGBOOT JSON node:    " + jsonObject + "\n\n\n\n");
+        System.out.println("\n\n\n\nSPRINGBOOT JSON node:    " + jsonObject + "\n\n\n\n");
 
-    //     return new ResponseEntity<JsonNode>(jsonObject, HttpStatus.OK);
+        return new ResponseEntity<JsonNode>(jsonObject, HttpStatus.OK);
 
-    //     //  could return a Table object, but for now stick to json objects
+        //  could return a Table object, but for now stick to json objects
 
-    // }
+    }
 
 
     // Maybe this has to return a table object so we can build the Thymeleaf table?
@@ -73,12 +73,12 @@ public class ToolController {
         String url = "http://127.0.0.1:5000/table-generator/"+ characteristics + "/"+ options;
         //RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.postForEntity(url, null,String .class, characteristics, options);
-        //System.out.println("\n\n\n\n JUST A CHECK\n\n\n\n" + response);
+    //     //System.out.println("\n\n\n\n JUST A CHECK\n\n\n\n" + response);
         String responseBody = response.getBody();
-       // System.out.println(responseBody);
+    //    // System.out.println(responseBody);
 
-       System.out.println("\n\n\n\nSPRINGBOOT RESPONSE BODY:    " + responseBody + "\n\n\n\n");
-       // tableService.parseTableFromJSON((JSONObject)response.getBody());
-        //  Render table()?
+        // System.out.println("\n\n\n\nSPRINGBOOT RESPONSE BODY:    " + responseBody + "\n\n\n\n");
+    //    // tableService.parseTableFromJSON((JSONObject)response.getBody());
+    //     //  Render table()?
     } 
 }
