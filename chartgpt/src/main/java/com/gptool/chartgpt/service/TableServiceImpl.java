@@ -71,16 +71,18 @@ public class TableServiceImpl implements TableService {
         }
     }
 
+    // can still use this by plugging the class enum into the treeToValue function
     @Override
     public Object parseToObject(String src, Formatter.OutputObjectType outputObject) {
         if (outputObject == Formatter.OutputObjectType.JsonNode) {
             return JSONutil.parse(src);
         } 
         return JSONutil.parse(src);
+
+        else if (outputObject == Formatter.OutputObjectType.Entry) {
+            return 
+        }
     }
 
-    public void cast() {
-
-    }
 }
 

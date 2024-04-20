@@ -48,40 +48,15 @@ def get_chart_info(option_list, metric):
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
     return json.loads(response.choices[0].message.content)
 
-
-'''
-#   Completion call that returns serialized JSON of table info
-def get_table_info(option_list, characteristics_list):
-    response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
-        messages=[
-        {"role": "system", "content": """
-        YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve one or more options. You will also recieve a list of characteristics.
-        Your output format should be each characteristic as a key, and then a key value pair of options and its corresponding
-        information (low word count please) as a string or in numerics, whichever makes more sense. RESPONSE SHOULD BE IN LOWER CASE. Here is an example:
-        {
-        *characteristic*: {
-            *option 1*: *information*,
-            *option 2*: *information*
-        }
-    }
-        """},
-        {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
-        ],
-        max_tokens = 200)
-    print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
-   # return json.loads(response.choices[0].message.content)
-    return response.choices[0].message.content
-'''
-
 #   JACKSON COMPATIBLE FORMATTING
 def get_table_info(option_list, characteristics_list):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
         messages=[
         {"role": "system", "content": """
         YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You will be asked to compare 2 or more things to eachother in topics provided by the user.
-        respond with a JSON of each of these topics in a list, and do the same with the options. The information list should contain data 
+        respond with a JSON of each of these topics in a list, and do the same with the options. The information lists should contain data 
         for each option on each topic.
-        Keep the information to the point and include statistics were relevant. Like this:
+        Keep the information to the point and include statistics where relevant. Like this:
         {
         *topic*:[
             *topic 1*,
@@ -89,12 +64,19 @@ def get_table_info(option_list, characteristics_list):
             *topic 3*
             ],
         *information* : [
-            *information on topic 1 for option 1 1*,
-            *information on topic 2 2*
+            *information on topic 1 for option 1*,
+            *information on topic 1 for option 2*,
+            *information on topic 1 for option 3*
+        ],
+        [
+            *information on topic 2 for option 1*,
+            *information on topic 2 for option 2*,
+            *information on topic 2 for option 3*
         ],
         *options* : [
             *option 1*,
-            *option 2*
+            *option 2*,
+            *option 3*
         ]
         }
     }

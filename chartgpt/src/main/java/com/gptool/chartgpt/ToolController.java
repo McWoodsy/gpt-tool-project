@@ -25,9 +25,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gptool.chartgpt.pojo.Table;
 import com.gptool.chartgpt.service.TableService;
+import com.gptool.chartgpt.service.utilities.Formatter;
 import com.gptool.chartgpt.service.utilities.JSONutil;
 
-@Controller
+@RestController
 public class ToolController {
 
     @Autowired
@@ -48,7 +49,7 @@ public class ToolController {
 
     @PostMapping("/getTable")
     public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
-        Object jsonObject = tableService.parse(jsonString);
+        Object jsonObject = tableService.parseToObject(jsonString , Formatter.OutputObjectType.JsonNode);
         System.out.println("\n\n\n\nSPRINGBOOT JSON node:    " + jsonObject + "\n\n\n\n");
         return new ResponseEntity<JsonNode>((JsonNode)jsonObject, HttpStatus.OK);
         //  could return a Table object, but for now stick to json object

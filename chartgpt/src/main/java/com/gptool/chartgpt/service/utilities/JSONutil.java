@@ -17,7 +17,6 @@ public class JSONutil implements Formatter {
         return defaultObjectMapper;
     }
 
-
     @Override
     public Object parse(String src) {
         try{

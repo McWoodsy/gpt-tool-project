@@ -1,29 +1,23 @@
 package com.gptool.chartgpt.pojo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Table {
 
-    //  Might make more sense to have the Table object be a list of entry objects
+    private List<Entry> entryList;
 
-    //  A table object is just a list of terms which are options and info
-    public ArrayList<Term> terms;
+    public Table(){};
 
-    // Tables need to be initialized with an empty constructor before operations
-    public Table(){
-    } 
+    public Table(List<Entry> entrylist){
+        this.entryList = entrylist;
+    };
 
-    public Table(ArrayList<Term> terms){
-        this.terms = terms;
+    public List<Entry> getEntryList() {
+        return this.entryList;
     }
 
-    public ArrayList<Term> getTerms() {
-        return this.terms;
+    public void setEntryList(List<Entry> entryList) {
+        this.entryList = entryList;
     }
-
-    public void setTerms(ArrayList<Term> terms) {
-        this.terms = terms;
-    }
-
-
+ 
 }
