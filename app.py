@@ -34,6 +34,7 @@ def prompt_to_palette():
     color_array = completion_calls.get_colors(query)
     return json.loads(color_array) # NOT serialized in the function so we do it here before returning
 
+# Set this to receive parameters in the body
 @app.route("/bar-chart", methods=["POST"])
 def prompt_to_bar_chart():
     ####### How do we pass in the JSON???
@@ -61,6 +62,7 @@ def prompt_to_table():
     return json.loads(table_JSON)
 '''
 
+#   We can rewrite this to accept parameters from the body instead of the URL
 @app.route("/table-generator/<characteristics>/<options>", methods=["POST"])
 def prompt_to_table(characteristics, options):
     print("\n\nCHARACTERISTICS   "+ characteristics)
@@ -68,8 +70,13 @@ def prompt_to_table(characteristics, options):
     table_JSON = completion_calls.get_table_info(options, characteristics)
     #return table_JSON
     print(table_JSON)
-    requests.post("http://127.0.0.1:8080/getTable",json=json.loads(table_JSON))
-    return "\n\n Posted to Spring Boot endpoint\n\n"
+    response = requests.post("http://127.0.0.1:8080/getTable",json=json.loads(table_JSON))
+    if (response.status_code == 200):
+        #In Flask, when you return a tuple from a view function, the first element of the tuple is 
+        #considered the response body, and the second element is considered the HTTP status code.
+        return "\n\n Posted to Spring Boot endpoint\n\n", 200
+    else:
+        return "Error", 500
 
 #################
     

@@ -78,17 +78,19 @@ def get_table_info(option_list, characteristics_list):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
         messages=[
         {"role": "system", "content": """
-        YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You will recieve a list of 1 or more terms. You recieve one or more options to compare based on these terms . 
-        respond in JSON with "term" as key and an array of terms, "information" as key and an array of information strings (information specific to the option and the term relating to it), and "options" as key and an array of options provided. RESPONSE SHOULD BE IN LOWER CASE. Here is an example:
+        YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You will be asked to compare 2 or more things to eachother in topics provided by the user.
+        respond with a JSON of each of these topics in a list, and do the same with the options. The information list should contain data 
+        for each option on each topic.
+        Keep the information to the point and include statistics were relevant. Like this:
         {
-        *term*:[
-            *term 1*,
-            *term 2*,
-            *term 3*
+        *topic*:[
+            *topic 1*,
+            *topic 2*,
+            *topic 3*
             ],
         *information* : [
-            *information 1*,
-            *information 2*
+            *information on topic 1 for option 1 1*,
+            *information on topic 2 2*
         ],
         *options* : [
             *option 1*,
@@ -101,7 +103,4 @@ def get_table_info(option_list, characteristics_list):
         ],
         max_tokens = 200)
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
-   # return json.loads(response.choices[0].message.content)
     return response.choices[0].message.content
-
-#print(get_table_info("world_population,obesity_rate", "australia,ukraine"))

@@ -17,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gptool.chartgpt.pojo.Table;
-import com.gptool.chartgpt.service.JSONutil;
 import com.gptool.chartgpt.service.TableService;
+import com.gptool.chartgpt.service.utilities.JSONutil;
 
 @Controller
 public class ToolController {
@@ -35,11 +36,6 @@ public class ToolController {
     @Autowired
     private RestTemplate restTemplate;
     
-    // @GetMapping("/")
-    // public String index(Model model) {
-    //     return "index.html";
-    // }
-
     @GetMapping("/")
     public String barChart(Model model) {
         return "table_generator.html";
@@ -52,33 +48,28 @@ public class ToolController {
 
     @PostMapping("/getTable")
     public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
-
-
-        System.out.println("\n\n\n\nSPRINGBOOT RESPONSE BODY:    " + jsonString + "\n\n\n\n");
-
-        JsonNode jsonObject = JSONutil.parse(jsonString);
-
+        Object jsonObject = tableService.parse(jsonString);
         System.out.println("\n\n\n\nSPRINGBOOT JSON node:    " + jsonObject + "\n\n\n\n");
-
-        return new ResponseEntity<JsonNode>(jsonObject, HttpStatus.OK);
-
-        //  could return a Table object, but for now stick to json objects
-
+        return new ResponseEntity<JsonNode>((JsonNode)jsonObject, HttpStatus.OK);
+        //  could return a Table object, but for now stick to json object
     }
 
 
-    // Maybe this has to return a table object so we can build the Thymeleaf table?
+    //  From web Browser
     @PostMapping("/createTable/{characteristics}/{options}")
-    public void createTable(@PathVariable String characteristics, @PathVariable String options) {
+    public ResponseEntity<String> createTable(@PathVariable String characteristics, @PathVariable String options) {
+        //  We need a util funciton to format the characteristics and options, or we can pass them in via the body
         String url = "http://127.0.0.1:5000/table-generator/"+ characteristics + "/"+ options;
-        //RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.postForEntity(url, null,String .class, characteristics, options);
-    //     //System.out.println("\n\n\n\n JUST A CHECK\n\n\n\n" + response);
-        String responseBody = response.getBody();
-    //    // System.out.println(responseBody);
+        try {
+            restTemplate.postForEntity(url, null,String .class, characteristics, options);
+        }
+        catch (HttpServerErrorException e){
+            System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
+        }
+        catch (Exception e){
+            System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-        // System.out.println("\n\n\n\nSPRINGBOOT RESPONSE BODY:    " + responseBody + "\n\n\n\n");
-    //    // tableService.parseTableFromJSON((JSONObject)response.getBody());
-    //     //  Render table()?
-    } 
 }
