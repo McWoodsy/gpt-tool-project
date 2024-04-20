@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDelegatingDeserializer;
@@ -73,16 +74,34 @@ public class TableServiceImpl implements TableService {
 
     // can still use this by plugging the class enum into the treeToValue function
     @Override
-    public Object parseToObject(String src, Formatter.OutputObjectType outputObject) {
-        if (outputObject == Formatter.OutputObjectType.JsonNode) {
+    public Object parseToObject(String src, Formatter.OutputObjectType outputObjectType) {
+        if (outputObjectType == Formatter.OutputObjectType.JsonNode) {
+            //  Exception is caught inside the function         
             return JSONutil.parse(src);
         } 
-        return JSONutil.parse(src);
-
-        else if (outputObject == Formatter.OutputObjectType.Entry) {
-            return 
+        else if (outputObjectType == Formatter.OutputObjectType.Entry) {
+            JsonNode jsonNode = (JsonNode) JSONutil.parse(src);
+            try{
+                Entry entryObject = JSONutil.objectMapper.treeToValue(jsonNode, Entry.class);
+                return entryObject;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                return new Object();
+            } 
         }
-    }
+        return new Object();
+        // else if (outputObjectType == Formatter.OutputObjectType.Table) {
+        //     JsonNode jsonNode = (JsonNode) JSONutil.parse(src);
+        //     try{
+        //         Table tableObject = JSONutil.objectMapper.treeToValue(jsonNode, Table.class);
+        //         return entryObject;
+        //     } catch (JsonProcessingException e) {
+        //         e.printStackTrace();
+        //         return "";
+        //     } 
 
-}
+        // }
+    }}
+
+
 

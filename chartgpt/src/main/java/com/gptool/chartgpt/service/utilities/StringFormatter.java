@@ -13,7 +13,9 @@ public class StringFormatter implements Formatter{
         return "No implementation";
     };
 
+    // For when new html is set up
     public String urlFormatter(String src) {
-        return "";
+        String formattedUrl = src.replaceAll(" ", "+");
+        return formattedUrl;
     };
 }

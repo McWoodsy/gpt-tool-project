@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class JSONutil implements Formatter {
 
-    private ObjectMapper objectMapper = getDefaultObjectMapper();
+    public ObjectMapper objectMapper = getDefaultObjectMapper();
 
     private ObjectMapper getDefaultObjectMapper() {
         ObjectMapper defaultObjectMapper = new ObjectMapper();
@@ -20,13 +20,13 @@ public class JSONutil implements Formatter {
     @Override
     public Object parse(String src) {
         try{
-        return objectMapper.readTree(src);
-    } catch (JsonProcessingException e) {
-        // Handle the exception (e.g., log error)
-        e.printStackTrace();
-        return "";
-     } // Return a default value
+            return objectMapper.readTree(src);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "";
+        } 
 }
+
 
     @Override
     public String parseToString(Object object) {
@@ -38,4 +38,6 @@ public class JSONutil implements Formatter {
             return ""; // Return a default value
         }
     }
+
+    //  If i go for the less abstracted pojos route i can have specific parsers for table and entries
 }
