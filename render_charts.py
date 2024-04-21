@@ -3,6 +3,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import json
 from dotenv import dotenv_values
+import custom_utility
 
 
 color_config=dotenv_values("theme.env")
@@ -13,6 +14,7 @@ color_config=dotenv_values("theme.env")
 def create_bar_chart(bar_chart_JSON, metric):    
     ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function  
     print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n") # For validation
+    metric = custom_utility.url_deformatter(metric)
     values = list(bar_chart_JSON[metric].values())
     options = list(bar_chart_JSON[metric].keys())
     options = [option.capitalize() for option in options]
@@ -38,6 +40,7 @@ def create_bar_chart(bar_chart_JSON, metric):
     plt.gca().spines['right'].set_color('white')
     # Save plot to static folder
     plt.savefig('./static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')  # Set background color and save with tight bounding box
+    plt.savefig('chartgpt/src/main/resources/static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')  # Set background color and save with tight bounding box
     plt.close()
     
 

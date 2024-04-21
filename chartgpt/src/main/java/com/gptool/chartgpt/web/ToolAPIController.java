@@ -1,4 +1,4 @@
-package com.gptool.chartgpt;
+package com.gptool.chartgpt.web;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 
 
 @RestController
-public class ToolController {
+public class ToolAPIController {
 
     @Autowired
     private TableService tableService;
@@ -39,15 +39,7 @@ public class ToolController {
     @Autowired
     private RestTemplate restTemplate;
     
-    @GetMapping("/")
-    public String barChart(Model model) {
-        return "table_generator.html";
-    }
 
-    @GetMapping("/error")
-    public String error(Model model) {
-        return "error";
-    }
 
     @PostMapping("/getTable")
     public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
@@ -58,22 +50,22 @@ public class ToolController {
         //  could return a Table object, but for now stick to json object
     }
 
-        //  From web Browser
-        @PostMapping("/createBarChart/{metric}/{options}")
-        public ResponseEntity<String> createBarChart(@PathVariable String metric, @PathVariable String options) {
-            //  We need a util funciton to format the characteristics and options, or we can pass them in via the body
-            String url = "http://127.0.0.1:5000/bar-chart/"+ metric + "/"+ options;
-            try {
-                restTemplate.postForEntity(url, null,String.class, metric, options);
-            }
-            catch (HttpServerErrorException e){
-                System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
-            }
-            catch (Exception e){
-                System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
-            }
-            return new ResponseEntity<>(HttpStatus.OK);
+    //  From web Browser
+    @PostMapping("/createBarChart/{metric}/{options}")
+    public ResponseEntity<String> createBarChart(@PathVariable String metric, @PathVariable String options) {
+        //  We need a util funciton to format the characteristics and options, or we can pass them in via the body
+        String url = "http://127.0.0.1:5000/bar-chart/"+ metric + "/"+ options;
+        try {
+            restTemplate.postForEntity(url, null,String.class, metric, options);
         }
+        catch (HttpServerErrorException e){
+            System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
+        }
+        catch (Exception e){
+            System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
     //  From web Browser
