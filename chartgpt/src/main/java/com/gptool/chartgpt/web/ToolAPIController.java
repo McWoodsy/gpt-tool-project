@@ -27,6 +27,8 @@ import com.gptool.chartgpt.pojo.Table;
 import com.gptool.chartgpt.service.TableService;
 import com.gptool.chartgpt.service.utilities.Formatter;
 import com.gptool.chartgpt.service.utilities.JSONutil;
+import com.gptool.chartgpt.service.utilities.StringFormatter;
+
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 
@@ -39,7 +41,8 @@ public class ToolAPIController {
     @Autowired
     private RestTemplate restTemplate;
     
-
+    @Autowired
+    private ViewController viewController;
 
     @PostMapping("/getTable")
     public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
@@ -49,6 +52,7 @@ public class ToolAPIController {
         return new ResponseEntity<JsonNode>((JsonNode)jsonObject, HttpStatus.OK);
         //  could return a Table object, but for now stick to json object
     }
+
 
     //  From web Browser
     @PostMapping("/createBarChart/{metric}/{options}")
@@ -72,6 +76,8 @@ public class ToolAPIController {
     @PostMapping("/createTable/{characteristics}/{options}")
     public ResponseEntity<String> createTable(@PathVariable String characteristics, @PathVariable String options) {
         //  We need a util funciton to format the characteristics and options, or we can pass them in via the body
+        characteristics = StringFormatter.urlFormatter(characteristics);
+        options = StringFormatter.urlFormatter(options);
         String url = "http://127.0.0.1:5000/table-generator/"+ characteristics + "/"+ options;
         try {
             restTemplate.postForEntity(url, null,String.class, characteristics, options);

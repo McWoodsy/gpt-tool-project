@@ -15,6 +15,8 @@ def create_bar_chart(bar_chart_JSON, metric):
     ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function  
     print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n") # For validation
     metric = custom_utility.url_deformatter(metric)
+    #print("\n\n\n BAR CHART JSON: " + bar_chart_JSON + "\n\n\n") 
+    #bar_chart_JSON = json.loads(bar_chart_JSON)
     values = list(bar_chart_JSON[metric].values())
     options = list(bar_chart_JSON[metric].keys())
     options = [option.capitalize() for option in options]

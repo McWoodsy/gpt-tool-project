@@ -48,6 +48,7 @@ def get_chart_info(option_list, metric):
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
     return json.loads(response.choices[0].message.content)
 
+
 #   JACKSON COMPATIBLE FORMATTING
 def get_table_info(option_list, characteristics_list):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",

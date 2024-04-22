@@ -2,36 +2,6 @@
 const currentPage = window.location.pathname;
 console.log(currentPage)
 
-// // Execute different branches based on the current page
-// if (currentPage === currentPage + "/color_palette.html") {
-//   // Execute code specific to page1.html
-
-//   // For example:
-//   const form = document.querySelector("#form");
-//   form.addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     getColors();
-//   });
-// } else if (currentPage === "/bar_chart.html") {
-//   // Execute code specific to page2.html
-
-//   // For example:
-//   const chartForm = document.querySelector("#chart_form");
-//   chartForm.addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     getChartInfo();
-//   });
-// } else {
-//   // Default behavior for other pages
-// }
-
-//  Original code: **{
-// //  Execute getColors() when submit button is clicked
-// const form = document.querySelector("#form");
-//     form.addEventListener("submit", function (e) {
-//       e.preventDefault();
-//       getColors();
-//     });
 
 // //  Execute showChart() when submit button is clicked
 const chartForm = document.querySelector("#chart_form");
@@ -42,19 +12,19 @@ const chartForm = document.querySelector("#chart_form");
 
 // Performs the POST request for fetching chart information
 function getChartInfo() {
-  const options = chartForm.elements.options.value;
-  const metric = chartForm.elements.metric.value;
+  let options = chartForm.elements.options.value;
+  options = urlFormatter(options);
+  let metric = chartForm.elements.metric.value;
+  metric = urlFormatter(metric);
+
+  const url = "http://127.0.0.1:8080/createBarChart/" + metric + options
   
-  //  Here is where comms with python API start
-  fetch("/bar-chart", {
+//  originally this was sent in the body but now the parameters are going into the url  
+  fetch("/createBarChart/" + metric + "/" + options, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: new URLSearchParams({
-      options: options,
-      metric: metric
-    })
+    }
   })
   .then((response) => {
     if (!response.ok) {
@@ -69,7 +39,6 @@ function getChartInfo() {
   })
   .then(() => {    
     showChart();
-    
   })
   .catch(error => {
     console.error("There was a problem with the fetch operation:", error);
@@ -84,7 +53,7 @@ function showChart(chartImageUrl) {
   const newHeight = 300 * 2; // Set your desired height
   chartImg.style.width = newWidth + "px";
   chartImg.style.height = newHeight + "px";
-  chartImg.src = "./static/images/my_bar_chart.png";
+  chartImg.src = "images/my_bar_chart.png";
   chartImg.style.marginLeft = "auto";
   chartImg.style.marginRight = "auto";
   chartImg.style.display = "block";
@@ -134,3 +103,11 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function urlDeformatter(src) {
+  return src.replace(/\+/g, " ");
+}
+
+
+function urlFormatter(src) {
+  return src.replace(/ /g, "+");
+}
