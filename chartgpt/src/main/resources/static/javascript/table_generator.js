@@ -3,14 +3,12 @@ const currentPage = window.location.pathname;
 console.log(currentPage)
 
 
-//  Original code: **{
 // //  Execute getColors() when submit button is clicked
 const tableForm = document.querySelector("#table_form");
 tableForm.addEventListener("submit", function (e) {
       e.preventDefault();
       getTableInfo();
     });
-
 
     // Performs the POST request for fetching chart information
 function getTableInfo() {

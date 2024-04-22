@@ -3,7 +3,6 @@ package com.gptool.chartgpt.service.utilities;
 public interface Formatter {
 
 
-
     String parseToString(Object object);
     Object parse(String src);
     //  

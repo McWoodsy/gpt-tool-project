@@ -54,6 +54,36 @@ public class ToolAPIController {
     }
 
 
+
+
+
+
+    @PostMapping("/createColorPalette/{query}")
+    public ResponseEntity<String> createColorPalette(@PathVariable String query) {
+       // query = urlFormatter(utilities.StringFormatter.urlFormatter(query));
+
+
+        String url = "http://127.0.0.1:5000/palette/"+query;
+        try {
+            restTemplate.postForEntity(url, null,String.class, query);
+        }
+        catch (HttpServerErrorException e){
+            System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+        catch (Exception e){
+            System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+
+
+
     //  From web Browser
     @PostMapping("/createBarChart/{metric}/{options}")
     public ResponseEntity<String> createBarChart(@PathVariable String metric, @PathVariable String options) {
@@ -64,9 +94,12 @@ public class ToolAPIController {
         }
         catch (HttpServerErrorException e){
             System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
         catch (Exception e){
             System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

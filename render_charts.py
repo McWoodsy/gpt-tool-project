@@ -12,10 +12,16 @@ color_config=dotenv_values("theme.env")
 
 
 #   Creates a bar chart and saves it to relative static folder
-def create_bar_chart(bar_chart_JSON, metric):    
+def create_bar_chart(bar_chart_JSON):    
     ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function  
     print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n") # For validation
-    metric = custom_utility.url_deformatter(metric)
+    
+    #   Get metric
+    for key in bar_chart_JSON.keys():
+        metric = key
+        break
+    
+    print(metric)
     
     #   Instead of passing in and using 'metric' just get it from the first key if the dict?
     values = list(bar_chart_JSON[metric].values())
@@ -43,7 +49,10 @@ def create_bar_chart(bar_chart_JSON, metric):
     plt.gca().spines['right'].set_color('white')
     # Save plot to static folder
     plt.savefig('chartgpt/src/main/resources/static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')
-    time.sleep(0.5)
+    
+    time.sleep(1)   ### This could be replaced if we change the name of the file and wait until a file with a specific 
+                    ### name appears in the static folder
+    
     plt.close()
     
 

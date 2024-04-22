@@ -28,18 +28,19 @@ def table_generator():
 
 
 #   MAYBE SOMEWHERE IN THIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
-@app.route("/palette", methods=["POST"])
-def prompt_to_palette():
+@app.route("/palette/<query>", methods=["POST"])
+def prompt_to_palette(query):
     #   Completion call
-    query = request.form.get("query")
+    # query = request.form.get("query")
     color_array = completion_calls.get_colors(query)
+    print(color_array)
     return json.loads(color_array) # NOT serialized in the function so we do it here before returning
 
 # Set this to receive parameters in the body after JSONifying everything
 @app.route("/bar-chart/<metric>/<options>", methods=["POST"])
 def prompt_to_bar_chart(metric, options):
     # This is if its receiving options and metric in the body as was done with the original javascript
-    # but now we're using parameters provided by the spring boot side so we cange the javascript
+    # but now we're using parameters provided by the spring boot side so we change the javascript
     #options = request.form.get("options")
     #metric = request.form.get("metric")
     bar_chart_JSON = completion_calls.get_chart_info(custom_utility.url_deformatter(options), custom_utility.url_deformatter(metric))
@@ -47,7 +48,7 @@ def prompt_to_bar_chart(metric, options):
     with open("static/json/table_data.json", "w") as file:
         json.dump(bar_chart_JSON, file)
     #   Here it is also saved to spring boot static
-    render_charts.create_bar_chart(bar_chart_JSON, metric)
+    render_charts.create_bar_chart(bar_chart_JSON)
     return "OK" , 200
 
 #   We can rewrite this to accept parameters from the body instead of the URL
