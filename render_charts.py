@@ -1,3 +1,4 @@
+import time
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -15,8 +16,8 @@ def create_bar_chart(bar_chart_JSON, metric):
     ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function  
     print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n") # For validation
     metric = custom_utility.url_deformatter(metric)
-    #print("\n\n\n BAR CHART JSON: " + bar_chart_JSON + "\n\n\n") 
-    #bar_chart_JSON = json.loads(bar_chart_JSON)
+    
+    #   Instead of passing in and using 'metric' just get it from the first key if the dict?
     values = list(bar_chart_JSON[metric].values())
     options = list(bar_chart_JSON[metric].keys())
     options = [option.capitalize() for option in options]
@@ -41,8 +42,8 @@ def create_bar_chart(bar_chart_JSON, metric):
     plt.gca().spines['left'].set_color('white')
     plt.gca().spines['right'].set_color('white')
     # Save plot to static folder
-    plt.savefig('./static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')  # Set background color and save with tight bounding box
-    plt.savefig('chartgpt/src/main/resources/static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')  # Set background color and save with tight bounding box
+    plt.savefig('chartgpt/src/main/resources/static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')
+    time.sleep(0.5)
     plt.close()
     
 
@@ -114,10 +115,6 @@ def create_table(table_JSON):
     plt.subplots_adjust(left=0.2, top=0.8)
     plt.savefig('./static/images/my_table.png')  # Save the table as an image
 
-
-
-
-    
 
 def create_graph(): # do we need a seperate funciton for correlation graphs?
     return
