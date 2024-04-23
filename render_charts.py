@@ -48,7 +48,11 @@ def create_bar_chart(bar_chart_JSON):
     plt.gca().spines['left'].set_color('white')
     plt.gca().spines['right'].set_color('white')
     # Save plot to static folder
-    plt.savefig('chartgpt/src/main/resources/static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')
+    try:
+        plt.savefig('chartgpt/src/main/resources/static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')
+    except FileNotFoundError:
+        print("Directory not found")
+        
     
     time.sleep(1)   ### This could be replaced if we change the name of the file and wait until a file with a specific 
                     ### name appears in the static folder
