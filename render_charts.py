@@ -59,7 +59,7 @@ def create_bar_chart(bar_chart_JSON):
 def create_pie_chart(pie_chart_JSON, group, criteria): #    
     return
 
-def create_table(table_JSON):
+""" def create_table(table_JSON):
     data = json.loads(table_JSON)
 
     # Get all countries
@@ -88,8 +88,9 @@ def create_table(table_JSON):
     plt.subplots_adjust(left=0.2, top=0.8)
     table.scale(4, 6)
     plt.savefig('./chartgpt/src/main/resources/static/images/my_table.png')
+    time.sleep(3)
     plt.close()
-
+ """
 
 
 def create_table(table_JSON):
@@ -123,7 +124,8 @@ def create_table(table_JSON):
 
     # Adjust layout to fit the table
     plt.subplots_adjust(left=0.2, top=0.8)
-    plt.savefig('./static/images/my_table.png')  # Save the table as an image
+    plt.savefig('./chartgpt/src/main/resources/static/images/my_table.png')
+    time.sleep(2)
 
 
 def create_graph(): # do we need a seperate funciton for correlation graphs?

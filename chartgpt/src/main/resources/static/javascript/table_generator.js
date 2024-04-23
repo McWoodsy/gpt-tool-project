@@ -50,7 +50,7 @@ function showTable() {
   const newHeight = 300 * 2; // Set your desired height
   tableImg.style.width = newWidth + "px";
   tableImg.style.height = newHeight + "px";
-  tableImg.src = "./static/images/my_table.png";
+  tableImg.src = "images/my_table.png";
   tableImg.style.marginLeft = "auto";
   tableImg.style.marginRight = "auto";
   tableImg.style.display = "block";

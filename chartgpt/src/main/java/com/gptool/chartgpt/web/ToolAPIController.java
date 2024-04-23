@@ -112,15 +112,4 @@ public class ToolAPIController {
         }
     }
 
-
-    // @PostMapping("/getTable")
-    // public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
-    //     //  Need to reassess what this is doing. Will need to save to JSON folder in this and reassess what casting and conversion is needed
-    //     Object jsonObject = tableService.parseToObject(jsonString , Formatter.OutputObjectType.JsonNode);
-    //     System.out.println("\n\n\n\nSPRINGBOOT JSON node:    " + jsonObject + "\n\n\n\n");
-    //     return new ResponseEntity<JsonNode>((JsonNode)jsonObject, HttpStatus.OK);
-    //     //  could return a Table object, but for now stick to json object
-    // }
-
-
 }
