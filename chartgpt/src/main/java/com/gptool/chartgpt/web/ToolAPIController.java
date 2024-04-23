@@ -44,28 +44,17 @@ public class ToolAPIController {
     @Autowired
     private ViewController viewController;
 
-    @PostMapping("/getTable")
-    public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
-        //  Need to reassess what this is doing. Will need to save to JSON folder in this and reassess what casting and conversion is needed
-        Object jsonObject = tableService.parseToObject(jsonString , Formatter.OutputObjectType.JsonNode);
-        System.out.println("\n\n\n\nSPRINGBOOT JSON node:    " + jsonObject + "\n\n\n\n");
-        return new ResponseEntity<JsonNode>((JsonNode)jsonObject, HttpStatus.OK);
-        //  could return a Table object, but for now stick to json object
-    }
-
-
-
-
-
 
     @PostMapping("/createColorPalette/{query}")
-    public ResponseEntity<String> createColorPalette(@PathVariable String query) {
+    public ResponseEntity<List<String>> createColorPalette(@PathVariable String query) {
        // query = urlFormatter(utilities.StringFormatter.urlFormatter(query));
 
-
         String url = "http://127.0.0.1:5000/palette/"+query;
+
         try {
-            restTemplate.postForEntity(url, null,String.class, query);
+          
+            List<String> response = restTemplate.postForObject(url, null, List.class);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
         catch (HttpServerErrorException e){
             System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
@@ -76,12 +65,7 @@ public class ToolAPIController {
             System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
 
 
     //  From web Browser
@@ -105,23 +89,38 @@ public class ToolAPIController {
     }
 
 
-    //  From web Browser
     @PostMapping("/createTable/{characteristics}/{options}")
-    public ResponseEntity<String> createTable(@PathVariable String characteristics, @PathVariable String options) {
+    public ResponseEntity<JsonNode> createTable(@PathVariable String characteristics, @PathVariable String options) {
         //  We need a util funciton to format the characteristics and options, or we can pass them in via the body
         characteristics = StringFormatter.urlFormatter(characteristics);
         options = StringFormatter.urlFormatter(options);
         String url = "http://127.0.0.1:5000/table-generator/"+ characteristics + "/"+ options;
         try {
-            restTemplate.postForEntity(url, null,String.class, characteristics, options);
+            //  For rendering, we dont need to return the response, but for making objects and storing it in repo we do need it returned
+            JsonNode response = restTemplate.postForObject(url, null,JsonNode.class, characteristics, options);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }
         catch (HttpServerErrorException e){
             System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
         catch (Exception e){
             System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    // @PostMapping("/getTable")
+    // public ResponseEntity<JsonNode> getTable(@RequestBody String jsonString) throws JsonMappingException, JsonProcessingException {
+    //     //  Need to reassess what this is doing. Will need to save to JSON folder in this and reassess what casting and conversion is needed
+    //     Object jsonObject = tableService.parseToObject(jsonString , Formatter.OutputObjectType.JsonNode);
+    //     System.out.println("\n\n\n\nSPRINGBOOT JSON node:    " + jsonObject + "\n\n\n\n");
+    //     return new ResponseEntity<JsonNode>((JsonNode)jsonObject, HttpStatus.OK);
+    //     //  could return a Table object, but for now stick to json object
+    // }
+
 
 }

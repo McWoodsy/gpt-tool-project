@@ -36,18 +36,16 @@ const form = document.querySelector("#form");
 
 //  ORIGINAL
 function getColors() {
-     let query = form.elements.query.value;
-     query = urlFormatter(query);
-     console.log("QUERY :   " + query);    
-     fetch("/createColorPalette/" + query, {
+  let query = form.elements.query.value;
+  query = urlFormatter(query);
+  console.log("QUERY :   " + query);    
+  fetch("/createColorPalette/" + query, {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-
-    })
-    .then(response => { response.json();
-      console.log("RESPONSE:   " + JSON.stringify(response));
+          "Content-Type": "application/x-www-form-urlencoded"
+      }
+  })
+  .then((response) => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
@@ -55,14 +53,20 @@ function getColors() {
       if (response.status === 204) {
           throw new Error('Empty response from server');
       }
-      return response.json(); // Parse response as JSON and return the result
-
-  })    .then(data => {
+      return response.json(); // Parse response as JSON and return the result 
+  })
+  .then(data => {
       const color_array = data;
       const container = document.querySelector(".container");
-      createColorBoxes(color_array,container);
-    });
+      createColorBoxes(color_array, container);
+  })
+  .catch(error => {
+      console.error('Error fetching color data:', error);
+      // Handle error here
+  });
 }
+
+
 
 //  Renders color boxes based on array size and contents
 function createColorBoxes(color_array,parent) {
