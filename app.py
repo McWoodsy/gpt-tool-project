@@ -33,16 +33,13 @@ def prompt_to_palette(query):
     #   Completion call
     # query = request.form.get("query")
     color_array = completion_calls.get_colors(query)
-    print(color_array)
+    print(json.loads(color_array))
+    #   Returns via body
     return json.loads(color_array) # NOT serialized in the function so we do it here before returning
 
 # Set this to receive parameters in the body after JSONifying everything
 @app.route("/bar-chart/<metric>/<options>", methods=["POST"])
 def prompt_to_bar_chart(metric, options):
-    # This is if its receiving options and metric in the body as was done with the original javascript
-    # but now we're using parameters provided by the spring boot side so we change the javascript
-    #options = request.form.get("options")
-    #metric = request.form.get("metric")
     bar_chart_JSON = completion_calls.get_chart_info(custom_utility.url_deformatter(options), custom_utility.url_deformatter(metric))
     # Write to static folder before rendering
     with open("static/json/table_data.json", "w") as file:
@@ -60,14 +57,15 @@ def prompt_to_table(characteristics, options):
     print("\n\nCHARACTERISTICS   "+ characteristics)
     print("\n\nOPTIONS         " + options)
     table_JSON = completion_calls.get_table_info(options, characteristics)
-    print(table_JSON)
-    response = requests.post("http://127.0.0.1:8080/getTable",json=json.loads(table_JSON))
-    if (response.status_code == 200):
+    render_charts.create_table(table_JSON)
+    #response = requests.post("http://127.0.0.1:8080/getTable",json=json.loads(table_JSON))
+    """ if (response.status_code == 200):
         #In Flask, when you return a tuple from a view function, the first element of the tuple is 
         #considered the response body, and the second element is considered the HTTP status code.
         return "\n\n Posted to Spring Boot endpoint\n\n", 200
     else:
-        return "Error", 500
+        return "Error", 500 """
+    return json.loads(table_JSON)
 
 #################
     
