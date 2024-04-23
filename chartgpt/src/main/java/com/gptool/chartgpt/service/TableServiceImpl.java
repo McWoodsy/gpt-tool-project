@@ -1,26 +1,14 @@
 package com.gptool.chartgpt.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
-
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.std.StdDelegatingDeserializer;
-import com.gptool.chartgpt.pojo.Information;
-import com.gptool.chartgpt.pojo.Option;
 import com.gptool.chartgpt.pojo.Table;
-import com.gptool.chartgpt.pojo.Term;
-import com.gptool.chartgpt.pojo.Topic;
 import com.gptool.chartgpt.repository.TableRepository;
-import com.gptool.chartgpt.service.utilities.Formatter;
-import com.gptool.chartgpt.service.utilities.JSONutil;
+import com.gptool.chartgpt.service.serviceutil.Formatter;
+import com.gptool.chartgpt.service.serviceutil.JSONutil;
 
 @Service
 public class TableServiceImpl implements TableService {

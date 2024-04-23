@@ -1,7 +1,7 @@
 package com.gptool.chartgpt.service;
 
 import com.gptool.chartgpt.pojo.Table;
-import com.gptool.chartgpt.service.utilities.Formatter;
+import com.gptool.chartgpt.service.serviceutil.Formatter;
 
 public interface TableService {
 

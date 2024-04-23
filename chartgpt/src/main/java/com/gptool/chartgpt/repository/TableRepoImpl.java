@@ -1,12 +1,6 @@
 package com.gptool.chartgpt.repository;
 
 import org.springframework.stereotype.Repository;
-
-import java.io.FileWriter;
-import java.io.IOException;
-
-import org.json.simple.JSONObject;
-
 import com.gptool.chartgpt.pojo.Table;
 
 @Repository

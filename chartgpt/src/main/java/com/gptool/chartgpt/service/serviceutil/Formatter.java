@@ -1,4 +1,4 @@
-package com.gptool.chartgpt.service.utilities;
+package com.gptool.chartgpt.service.serviceutil;
 
 public interface Formatter {
 
