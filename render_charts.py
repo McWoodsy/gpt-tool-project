@@ -125,7 +125,7 @@ def create_table(table_JSON):
     # Adjust layout to fit the table
     plt.subplots_adjust(left=0.2, top=0.8)
     plt.savefig('./chartgpt/src/main/resources/static/images/my_table.png')
-    time.sleep(2)
+    time.sleep(2)   # Could maybe return hashes aswell and wait for a certain hash to appear? Instead of manual waits
 
 
 def create_graph(): # do we need a seperate funciton for correlation graphs?

@@ -41,9 +41,6 @@ def prompt_to_palette(query):
 @app.route("/bar-chart/<metric>/<options>", methods=["POST"])
 def prompt_to_bar_chart(metric, options):
     bar_chart_JSON = completion_calls.get_chart_info(custom_utility.url_deformatter(options), custom_utility.url_deformatter(metric))
-    # Write to static folder before rendering
-    with open("static/json/table_data.json", "w") as file:
-        json.dump(bar_chart_JSON, file)
     #   Here it is also saved to spring boot static
     render_charts.create_bar_chart(bar_chart_JSON)
     return "OK" , 200
@@ -58,7 +55,6 @@ def prompt_to_table(characteristics, options):
     print("\n\nOPTIONS         " + options)
     table_JSON = completion_calls.get_table_info(options, characteristics)
     render_charts.create_table(table_JSON)
-    #response = requests.post("http://127.0.0.1:8080/getTable",json=json.loads(table_JSON))
     """ if (response.status_code == 200):
         #In Flask, when you return a tuple from a view function, the first element of the tuple is 
         #considered the response body, and the second element is considered the HTTP status code.

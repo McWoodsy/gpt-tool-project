@@ -40,9 +40,6 @@ public class ToolAPIController {
 
     @Autowired
     private RestTemplate restTemplate;
-    
-    @Autowired
-    private ViewController viewController;
 
 
     @PostMapping("/createColorPalette/{query}")
@@ -98,6 +95,7 @@ public class ToolAPIController {
         try {
             //  For rendering, we dont need to return the response, but for making objects and storing it in repo we do need it returned
             JsonNode response = restTemplate.postForObject(url, null,JsonNode.class, characteristics, options);
+            //  
             return new ResponseEntity<>(response,HttpStatus.OK);
         }
         catch (HttpServerErrorException e){
