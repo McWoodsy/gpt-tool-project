@@ -2,6 +2,7 @@ package com.gptool.chartgpt.service;
 
 import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,6 +12,7 @@ import com.gptool.chartgpt.service.serviceutil.Formatter;
 import com.gptool.chartgpt.service.serviceutil.JSONutil;
 
 @Service
+@Primary
 public class TableServiceImpl implements TableService {
 
     @Autowired
