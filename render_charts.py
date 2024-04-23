@@ -1,8 +1,10 @@
+import time
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import json
 from dotenv import dotenv_values
+import custom_utility
 
 
 color_config=dotenv_values("theme.env")
@@ -10,9 +12,18 @@ color_config=dotenv_values("theme.env")
 
 
 #   Creates a bar chart and saves it to relative static folder
-def create_bar_chart(bar_chart_JSON, metric):    
+def create_bar_chart(bar_chart_JSON):    
     ##########  We need to create a dict or a list from the serialized JSON array created by get_chart_info() and pass this into the rest of the function  
     print("\n\n\n" + json.dumps(bar_chart_JSON) + "\n\n\n") # For validation
+    
+    #   Get metric
+    for key in bar_chart_JSON.keys():
+        metric = key
+        break
+    
+    print(metric)
+    
+    #   Instead of passing in and using 'metric' just get it from the first key if the dict?
     values = list(bar_chart_JSON[metric].values())
     options = list(bar_chart_JSON[metric].keys())
     options = [option.capitalize() for option in options]
@@ -37,44 +48,16 @@ def create_bar_chart(bar_chart_JSON, metric):
     plt.gca().spines['left'].set_color('white')
     plt.gca().spines['right'].set_color('white')
     # Save plot to static folder
-    plt.savefig('./static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')  # Set background color and save with tight bounding box
+    plt.savefig('chartgpt/src/main/resources/static/images/my_bar_chart.png', facecolor='#4c0000', bbox_inches='tight')
+    
+    time.sleep(1)   ### This could be replaced if we change the name of the file and wait until a file with a specific 
+                    ### name appears in the static folder
+    
     plt.close()
     
 
 def create_pie_chart(pie_chart_JSON, group, criteria): #    
     return
-
-def create_table(table_JSON):
-    data = json.loads(table_JSON)
-
-    # Get all countries
-    countries = list(data[next(iter(data))])
-
-    # Prepare rows for table
-    rows = [["Country"] + countries]  # First row contains "Country" and all country names
-
-    # Iterate over each category (e.g., "gdp per capita", "average salary in euros", "years of existence")
-    for category, values in data.items():
-        row = [category]  # Start row with category name
-        for country in countries:
-            row.append(values.get(country, "-"))  # Append value for each country, or "-" if not found
-        rows.append(row)
-
-    fig, ax = plt.subplots()
-
-    # Creating the table
-    table = ax.table(cellText=rows,
-                     loc='center')
-
-    # Hide axes
-    ax.axis('off')
-
-    # Adjust layout to fit the table
-    plt.subplots_adjust(left=0.2, top=0.8)
-    table.scale(4, 6)
-    plt.savefig('./static/images/my_table.png')  # Save the table as an image
-
-
 
 def create_table(table_JSON):
     data = json.loads(table_JSON)
@@ -107,12 +90,9 @@ def create_table(table_JSON):
 
     # Adjust layout to fit the table
     plt.subplots_adjust(left=0.2, top=0.8)
-    plt.savefig('./static/images/my_table.png')  # Save the table as an image
+    plt.savefig('./chartgpt/src/main/resources/static/images/my_table.png')
+    time.sleep(2)   # Could maybe return hashes aswell and wait for a certain hash to appear? Instead of manual waits
 
-
-
-
-    
 
 def create_graph(): # do we need a seperate funciton for correlation graphs?
     return

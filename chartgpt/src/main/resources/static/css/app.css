@@ -1,0 +1,116 @@
+
+
+body {
+  background-color: #292C35; 
+  color: white; 
+}
+
+h1 {
+    font-family: 'Courier New';
+    text-align: center;
+    margin-bottom: 20px;
+    position:absolute;
+    width:33.3%;
+    top: 28%;
+    font-size:15px;
+
+    color: #D3D3D3;
+  }
+
+  h5 {
+    font-family: 'Courier New';
+    text-align: center;
+    position:absolute;
+    width:100%;
+    top: 28%;
+    color: #D3D3D3;
+    font-size:15px;
+
+  }
+
+  h3 {
+    font-size:15px;
+    bottom:0;
+    position:absolute;
+    bottom:0;
+    opacity:0.3;
+    font-family: 'Courier New';
+  }
+
+  h4 {
+    text-align: center;
+    font-family: 'Courier New';
+    color: #D3D3D3;
+    font-size:15px;
+
+
+  }
+
+  
+  .bar_chart_form {
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+
+  }
+  .bar_chart_form label,
+  .bar_chart_form input {
+    margin-bottom: 10px;
+  }
+
+  .container {
+    background-color: #4c0000; 
+    width: 66.6%;
+    height: 100vh;
+    display: flex;
+    text-align: center;
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    align-items: center;
+  }
+
+  .color {
+    height: 100%;
+    justify-content: center;
+    align-items: flex-end;
+    cursor: pointer;
+  }
+
+  .color:active {
+    opacity: 0.5;
+    text-align: center;
+  }
+
+  .link {
+    color:aqua;
+  }
+
+  .color span {
+    color: #ECECEC;
+    text-align: center;
+    text-shadow: 2px 2px black;
+  }
+
+  .form {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .chart_options_form {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .chart_metric_form {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .button {
+    margin-bottom: 20px;
+  }
+  .button2 {
+    margin-bottom: 20px;
+    margin: 0 auto;
+  }

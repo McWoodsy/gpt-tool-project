@@ -1,13 +1,10 @@
-from flask import Flask, render_template, request
 from openai import OpenAI
 import json
 from dotenv import dotenv_values
-from threading import Thread
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import time
-import render_charts
+
 
 config=dotenv_values(".env")
 
@@ -48,10 +45,13 @@ def get_chart_info(option_list, metric):
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
     return json.loads(response.choices[0].message.content)
 
-#   Completion call that returns serialized JSON of table info
+
+
+
 def get_table_info(option_list, characteristics_list):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
         messages=[
+     
         {"role": "system", "content": """
         YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve one or more options. You will also recieve a list of characteristics.
         Your output format should be each characteristic as a key, and then a key value pair of options and its corresponding
@@ -67,9 +67,43 @@ def get_table_info(option_list, characteristics_list):
         ],
         max_tokens = 200)
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
-   # return json.loads(response.choices[0].message.content)
     return response.choices[0].message.content
 
-render_charts.create_table(
-get_table_info("france, england, germany", "gdp per capita, average salary in euros, years of existence")
-)
+
+def get_table_infoALT(option_list, characteristics_list):
+    response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
+        messages=[
+        {"role": "system", "content": """
+        YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You will be asked to compare 2 or more things to eachother in topics provided by the user.
+        respond with a JSON of each of these topics in a list, and do the same with the options. The information lists should contain data 
+        for each option on each topic.
+        Keep the information to the point and include statistics where relevant. Like this:
+        {
+        *topic*:[
+            *topic 1*,
+            *topic 2*,
+            *topic 3*
+            ],
+        *information* : [
+            *information on topic 1 for option 1*,
+            *information on topic 1 for option 2*,
+            *information on topic 1 for option 3*
+        ],
+        [
+            *information on topic 2 for option 1*,
+            *information on topic 2 for option 2*,
+            *information on topic 2 for option 3*
+        ],
+        *options* : [
+            *option 1*,
+            *option 2*,
+            *option 3*
+        ]
+        }
+    }
+        """},
+        {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
+        ],
+        max_tokens = 200)
+    print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
+    return response.choices[0].message.content
