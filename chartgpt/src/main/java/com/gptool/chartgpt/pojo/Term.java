@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Term {
 
-    //  Each Term in a table has identically indexed options and information for that term corresponding to that option
     ArrayList<String> options;
     ArrayList<String> information; 
     

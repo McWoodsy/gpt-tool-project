@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, url_for, redirect
 import completion_calls
 import render_charts
 import json
-import os
-import requests
 import custom_utility
 
 app = Flask(__name__,
@@ -27,25 +25,20 @@ def table_generator():
     return render_template("/table_generator.html")
 
 
-#   MAYBE SOMEWHERE IN THIS FUNCTION IS WHERE WE FIX THE REFRESH ISSUE??????
 @app.route("/palette/<query>", methods=["POST"])
 def prompt_to_palette(query):
     #   Completion call
-    # query = request.form.get("query")
     color_array = completion_calls.get_colors(query)
     print(json.loads(color_array))
-    #   Returns via body
     return json.loads(color_array) # NOT serialized in the function so we do it here before returning
 
-# Set this to receive parameters in the body after JSONifying everything
 @app.route("/bar-chart/<metric>/<options>", methods=["POST"])
 def prompt_to_bar_chart(metric, options):
     bar_chart_JSON = completion_calls.get_chart_info(custom_utility.url_deformatter(options), custom_utility.url_deformatter(metric))
-    #   Here it is also saved to spring boot static
+    #   Here an image is also saved to spring boot static
     render_charts.create_bar_chart(bar_chart_JSON)
     return "OK" , 200
 
-#   We can rewrite this to accept parameters from the body instead of the URL
 @app.route("/table-generator/<characteristics>/<options>", methods=["POST"])
 def prompt_to_table(characteristics, options):
     # url deformatter

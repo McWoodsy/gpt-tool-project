@@ -1,13 +1,10 @@
-from flask import Flask, render_template, request
 from openai import OpenAI
 import json
 from dotenv import dotenv_values
-from threading import Thread
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import time
-import render_charts
+
 
 config=dotenv_values(".env")
 
@@ -49,8 +46,31 @@ def get_chart_info(option_list, metric):
     return json.loads(response.choices[0].message.content)
 
 
-#   JACKSON COMPATIBLE FORMATTING
-def get_table_infoORIGINAL(option_list, characteristics_list):
+
+
+def get_table_info(option_list, characteristics_list):
+    response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
+        messages=[
+     
+        {"role": "system", "content": """
+        YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve one or more options. You will also recieve a list of characteristics.
+        Your output format should be each characteristic as a key, and then a key value pair of options and its corresponding
+        information (low word count please) as a string or in numerics, whichever makes more sense. RESPONSE SHOULD BE IN LOWER CASE. Here is an example:
+        {
+        *characteristic*: {
+            *option 1*: *information*,
+            *option 2*: *information*
+        }
+    }
+        """},
+        {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
+        ],
+        max_tokens = 200)
+    print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
+    return response.choices[0].message.content
+
+
+def get_table_infoALT(option_list, characteristics_list):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
         messages=[
         {"role": "system", "content": """
@@ -87,26 +107,3 @@ def get_table_infoORIGINAL(option_list, characteristics_list):
         max_tokens = 200)
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
     return response.choices[0].message.content
-
-def get_table_info(option_list, characteristics_list):
-    response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
-        messages=[
-     
-        {"role": "system", "content": """
-        YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You recieve one or more options. You will also recieve a list of characteristics.
-        Your output format should be each characteristic as a key, and then a key value pair of options and its corresponding
-        information (low word count please) as a string or in numerics, whichever makes more sense. RESPONSE SHOULD BE IN LOWER CASE. Here is an example:
-        {
-        *characteristic*: {
-            *option 1*: *information*,
-            *option 2*: *information*
-        }
-    }
-        """},
-        {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
-        ],
-        max_tokens = 200)
-    print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
-    return response.choices[0].message.content
-
-

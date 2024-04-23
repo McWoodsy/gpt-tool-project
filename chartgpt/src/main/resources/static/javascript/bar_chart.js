@@ -14,7 +14,7 @@ const chartForm = document.querySelector("#chart_form");
 function getChartInfo() {
 
   let options = chartForm.elements.options.value;
-  options = urlFormatter(options);  //  unless spaces are removed before plugging into the url theres an error
+  options = urlFormatter(options); 
   console.log("OPTIONS:    " + options);
 
   let metric = chartForm.elements.metric.value;
@@ -22,7 +22,6 @@ function getChartInfo() {
   console.log("METRIC:     " +metric);
   const url = "http://127.0.0.1:8080/createBarChart/" + metric + options
   
-//  originally this was sent in the body but now the parameters are going into the url  
   fetch("/createBarChart/" + metric + "/" + options, {
     method: "POST",
     headers: {

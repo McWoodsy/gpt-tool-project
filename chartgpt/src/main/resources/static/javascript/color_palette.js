@@ -2,7 +2,6 @@
 const currentPage = window.location.pathname;
 
 
-//  Original code: **{
 // //  Execute getColors() when submit button is clicked
 const form = document.querySelector("#form");
     form.addEventListener("submit", function (e) {
@@ -10,29 +9,6 @@ const form = document.querySelector("#form");
       getColors();
     });
 
-
-//  NEW
-//  Performs the POST request
-// function getColors() {
-//     let query = form.elements.query.value;
-//     query = urlFormatter(query);
-//     console.log("QUERY :   " + query);
-  
-//     const url = "http://127.0.0.1:8080/createColorPalette/" + query
-//       fetch("/palette/" + query, {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/x-www-form-urlencoded"
-//         } !!! ","
-//       })
-//       .then((response) => response.json())
-//       .then(data => {
-//         const color_array = data;
-//         console.log("color array : " + color_array);
-//         const container = document.querySelector(".container");
-//         createColorBoxes(color_array,container);
-//       });
-// }
 
 //  ORIGINAL
 function getColors() {
@@ -65,8 +41,6 @@ function getColors() {
       // Handle error here
   });
 }
-
-
 
 //  Renders color boxes based on array size and contents
 function createColorBoxes(color_array,parent) {

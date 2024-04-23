@@ -43,7 +43,6 @@ public class TableServiceImpl implements TableService {
 
     @Override
     public void renderTable(Table table){
-        //  ???
     }
 
     //  Parses objects to string
@@ -52,27 +51,11 @@ public class TableServiceImpl implements TableService {
         if (object instanceof JsonNode) {
         return JSONutil.parseToString((JsonNode)object);
     }
-        // else if (object instanceof Table) {
-        //     //  convert table to JSON then JSON to string
-        // }
-        // else if (object instanceof Entry) {
-        //     //  convert table to JSON then JSON to string
-        // }
-        // else if (object instanceof Information) {
-        //     //  convert table to JSON then JSON to string
-        // }
-        // else if (object instanceof Topic) {
-        //     //  convert table to JSON then JSON to string
-        // }
-        // else if (object instanceof Option) {
-        //     //  convert table to JSON then JSON to string
-        // }
         else {
-            return "";
+            return "Unknown type";
         }
     }
 
-    // can still use this by plugging the class enum into the treeToValue function
     @Override
     public Object parseToObject(String src, Formatter.OutputObjectType outputObjectType) {
         if (outputObjectType == Formatter.OutputObjectType.JsonNode) {
@@ -90,17 +73,7 @@ public class TableServiceImpl implements TableService {
             } 
         }
         return new Object();
-        // else if (outputObjectType == Formatter.OutputObjectType.Table) {
-        //     JsonNode jsonNode = (JsonNode) JSONutil.parse(src);
-        //     try{
-        //         Table tableObject = JSONutil.objectMapper.treeToValue(jsonNode, Table.class);
-        //         return entryObject;
-        //     } catch (JsonProcessingException e) {
-        //         e.printStackTrace();
-        //         return "";
-        //     } 
 
-        // }
     }}
 
 

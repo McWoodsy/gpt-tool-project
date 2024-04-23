@@ -27,11 +27,10 @@ function getTableInfo() {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    return response.text(); //  Return it .json() ???
+    return response.text(); 
   })
   .then(data => {
     if (data === "bar chart created") {
-      //return sleep(100);
     }
   })
   .then(() => {
@@ -46,8 +45,8 @@ function getTableInfo() {
 function showTable() {
   const tableImg = document.getElementById("table-img");
   tableImg.src = "";
-  const newWidth = 400 * 2; // Set your desired width
-  const newHeight = 300 * 2; // Set your desired height
+  const newWidth = 400 * 2;
+  const newHeight = 300 * 2; 
   tableImg.style.width = newWidth + "px";
   tableImg.style.height = newHeight + "px";
   tableImg.src = "images/my_table.png";

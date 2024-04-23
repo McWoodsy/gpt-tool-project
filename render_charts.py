@@ -59,40 +59,6 @@ def create_bar_chart(bar_chart_JSON):
 def create_pie_chart(pie_chart_JSON, group, criteria): #    
     return
 
-""" def create_table(table_JSON):
-    data = json.loads(table_JSON)
-
-    # Get all countries
-    countries = list(data[next(iter(data))])
-
-    # Prepare rows for table
-    rows = [["Country"] + countries]  # First row contains "Country" and all country names
-
-    # Iterate over each category (e.g., "gdp per capita", "average salary in euros", "years of existence")
-    for category, values in data.items():
-        row = [category]  # Start row with category name
-        for country in countries:
-            row.append(values.get(country, "-"))  # Append value for each country, or "-" if not found
-        rows.append(row)
-
-    fig, ax = plt.subplots()
-
-    # Creating the table
-    table = ax.table(cellText=rows,
-                     loc='center')
-
-    # Hide axes
-    ax.axis('off')
-
-    # Adjust layout to fit the table
-    plt.subplots_adjust(left=0.2, top=0.8)
-    table.scale(4, 6)
-    plt.savefig('./chartgpt/src/main/resources/static/images/my_table.png')
-    time.sleep(3)
-    plt.close()
- """
-
-
 def create_table(table_JSON):
     data = json.loads(table_JSON)
 
