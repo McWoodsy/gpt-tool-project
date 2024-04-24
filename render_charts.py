@@ -62,7 +62,7 @@ def create_bar_chart(bar_chart_JSON):
 
 def create_pie_chart(pie_chart_JSON, group, criteria): #    
     return
-
+'''
 def create_table(table_JSON):
     data = json.loads(table_JSON)
 
@@ -96,7 +96,49 @@ def create_table(table_JSON):
     plt.subplots_adjust(left=0.2, top=0.8)
     plt.savefig('./chartgpt/src/main/resources/static/images/my_table.png')
     time.sleep(2)   # Could maybe return hashes aswell and wait for a certain hash to appear? Instead of manual waits
-
+'''
 
 def create_graph(): # do we need a seperate funciton for correlation graphs?
     return
+
+def create_table(table_JSON):
+    
+    data = json.loads(table_JSON)
+
+    # Extract data from JSON
+    topics = data["topics"]
+    information = data["information"]
+    options = data["options"]
+
+    # Prepare rows for table
+    rows = []
+
+    # Append column headers (topics) as the first row
+    rows.append([""] + topics)
+
+    # Iterate over each option (country)
+    for idx, option in enumerate(options):
+        row = [option]  # Start row with option name
+        for topic_idx, topic_info in enumerate(information):
+            if idx < len(topic_info):
+                row.append(topic_info[idx])  # Append value for each topic if available
+            else:
+                row.append("-")  # Append "-" for missing data
+        rows.append(row)
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+    # Creating the table
+    table = ax.table(cellText=rows,
+                     loc='center',
+                     edges='open',# removes edges
+                     )
+    
+    table.set_fontsize(14)
+
+    # Hide axes
+    ax.axis('off')
+
+    # Adjust layout to fit the table
+    plt.subplots_adjust(left=0.2, top=0.8)
+    plt.savefig('./chartgpt/src/main/resources/static/images/my_table.png')
+    time.sleep(2)

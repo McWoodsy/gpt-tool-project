@@ -2,31 +2,49 @@ package com.gptool.chartgpt.pojo;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Table {
 
-    private String name;
-    private List<Entry> entryList;
+    //private String name;
+
+
+    //private List<Entry> entryList;
+
+    @JsonProperty("topics")
+    private List<String> topics;
+    
+    @JsonProperty("information")
+    private List<List<String>> information;
+
+    @JsonProperty("options")
+    private List<String> option;
 
     public Table(){};
 
-    public Table(List<Entry> entrylist){
-        this.entryList = entrylist;
-    };
-
-    public List<Entry> getEntryList() {
-        return this.entryList;
+    public List<String> getTopics() {
+        return this.topics;
     }
 
-    public void setEntryList(List<Entry> entryList) {
-        this.entryList = entryList;
+    public void setTopics(List<String> topics) {
+        this.topics = topics;
     }
 
-    public String getName() {
-        return this.name;
+    public List<List<String>> getInformation() {
+        return this.information;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setInformation(List<List<String>> information) {
+        this.information = information;
     }
+
+    public List<String> getOption() {
+        return this.option;
+    }
+
+    public void setOption(List<String> option) {
+        this.option = option;
+    }
+
 
 }

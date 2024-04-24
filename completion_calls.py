@@ -78,8 +78,9 @@ def get_table_info(option_list, characteristics_list):
         {"role": "system", "content": """
         YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You will be asked to compare 2 or more things to eachother in topics provided by the user.
         respond with a JSON of each of these topics in a list, and do the same with the options. The information lists should contain data 
-        for each option on each topic.
-        Keep the information to the point and include statistics where relevant. Like this:
+        for each option on each topic. There should be quotation marks around each item in the information lists.
+        Each list under the "information" key must have quotations around it.
+        Keep the information to the point (brief). Include pure data as the information. Like this:
         {
         *topic*:[
             *topic 1*,
@@ -87,15 +88,16 @@ def get_table_info(option_list, characteristics_list):
             *topic 3*
             ],
         *information* : [
-            *information on topic 1 for option 1*,
-            *information on topic 1 for option 2*,
-            *information on topic 1 for option 3*
-        ],
-        [
-            *information on topic 2 for option 1*,
-            *information on topic 2 for option 2*,
-            *information on topic 2 for option 3*
-        ],
+           "[ *information on topic 1 for option 1* e.g."20%",
+            *information on topic 1 for option 2* e.g. "40%",
+            *information on topic 1 for option 3* e.g. "32%",
+        ]",
+        "[
+            *information on topic 2 for option 1* e.g. Budapest, 
+            *information on topic 2 for option 2* e.g. Rome,
+            *information on topic 2 for option 3* e.g. Madrid,
+        ]",
+        ]
         *options* : [
             *option 1*,
             *option 2*,
@@ -106,6 +108,7 @@ def get_table_info(option_list, characteristics_list):
         """},
         {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
         ],
-        max_tokens = 200)
+        max_tokens = 200,
+        temperature = 0.5)
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
     return response.choices[0].message.content

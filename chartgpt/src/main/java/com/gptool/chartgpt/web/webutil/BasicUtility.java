@@ -10,14 +10,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gptool.chartgpt.pojo.Table;
+import com.gptool.chartgpt.service.TableService;
 import com.gptool.chartgpt.service.serviceutil.StringFormatter;
 
 @Component
 @Primary
 public class BasicUtility implements ControllerUtility{
 
+
+
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private TableService tableService;
 
 
         public ResponseEntity<JsonNode> createTable(String characteristics, String options) {
@@ -28,7 +35,8 @@ public class BasicUtility implements ControllerUtility{
             try {
                 //  For rendering, we dont need to return the response, but for making objects and storing it in repo we do need it returned
                 JsonNode response = restTemplate.postForObject(url, null,JsonNode.class, characteristics, options);
-                //  
+                String responseString = tableService.parse(response);
+                Table table = tableService.jsonToTable(responseString);
                 return new ResponseEntity<>(response,HttpStatus.OK);
             }
             catch (HttpServerErrorException e){
@@ -41,6 +49,25 @@ public class BasicUtility implements ControllerUtility{
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         @Override
     public ResponseEntity<String> createBarChart(@PathVariable String metric, @PathVariable String options) {
         //  We need a util funciton to format the characteristics and options, or we can pass them in via the body
@@ -60,6 +87,9 @@ public class BasicUtility implements ControllerUtility{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+
+    
     @Override
     public ResponseEntity<List<String>> createColorPalette(@PathVariable String query) {
 
@@ -68,8 +98,10 @@ public class BasicUtility implements ControllerUtility{
         try {
           
             List<String> response = restTemplate.postForObject(url, null, List.class);
+            
             //  response should be saved to the json folder
             System.out.println("\n\n\n ENDPOINT RESPONSE:           " + response.toString() + "\n\n\n");
+           // Table table = 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         catch (HttpServerErrorException e){

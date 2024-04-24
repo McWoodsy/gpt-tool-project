@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gptool.chartgpt.pojo.Table;
 
 @Component
 public class JSONutil implements Formatter {
@@ -37,6 +38,11 @@ public class JSONutil implements Formatter {
             e.printStackTrace();
             return ""; // Return a default value
         }
+    }
+
+    public Table jsonToTable(String json) throws JsonMappingException, JsonProcessingException {
+        Table table = objectMapper.readValue(json, Table.class);
+        return table;
     }
 
     //  If i go for the less abstracted pojos route i can have specific parsers for table and entries

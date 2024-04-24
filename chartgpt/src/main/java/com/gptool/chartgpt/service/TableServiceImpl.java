@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gptool.chartgpt.pojo.Table;
 import com.gptool.chartgpt.repository.TableRepository;
@@ -19,7 +20,7 @@ public class TableServiceImpl implements TableService {
     private TableRepository tableRepository;
 
     @Autowired
-    private JSONutil JSONutil;
+    JSONutil JSONutil;
     
     @Override
     public Table getTable(String id) {
@@ -64,7 +65,16 @@ public class TableServiceImpl implements TableService {
         }
         return new Object();
 
-    }}
+
+
+    }
+
+    public Table jsonToTable(String json) throws JsonMappingException, JsonProcessingException {
+        return JSONutil.jsonToTable(json);
+    }
+
+
+}
 
 
 
