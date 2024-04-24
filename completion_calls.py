@@ -81,8 +81,42 @@ def get_table_info(option_list, characteristics_list):
         for each option on each topic. There should be quotation marks around each item in the information lists.
         Each list under the "information" key must have quotations around it.
         Keep the information to the point (brief). Include pure data as the information. Like this:
-        {
-        *topic*:[
+        {{
+            "topics": [
+                "average body weight in kilos",
+                "number of feet"
+            ],
+            "information": [
+                "[ "35-40 kg",
+                "350-450 kg",
+                "4000-6000 kg",
+                "80000-130000 kg"
+                ]",
+                "[ "2 feet",
+                "4 feet",
+                "4 feet",
+                "0 feet"
+                ]"
+            ],
+            "options": [
+                "penguins",
+                "zebras",
+                "elephants",
+                "whales"
+            ]
+        }
+
+
+        """},
+        {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
+        ],
+        max_tokens = 200,
+        temperature = 0.3)
+    print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
+    return response.choices[0].message.content
+
+
+'''        *topic*:[
             *topic 1*,
             *topic 2*,
             *topic 3*
@@ -104,11 +138,4 @@ def get_table_info(option_list, characteristics_list):
             *option 3*
         ]
         }
-    }
-        """},
-        {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
-        ],
-        max_tokens = 200,
-        temperature = 0.5)
-    print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
-    return response.choices[0].message.content
+    }'''

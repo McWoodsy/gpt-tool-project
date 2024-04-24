@@ -16,6 +16,14 @@ public class Entry {
     @JsonProperty("options")
     private String option;
 
+    public Entry(){};
+
+    public Entry(String option, List<String> topics, List<String> information) {
+        this.option = option;
+        this.topics = topics;
+        this.information = information;
+    };
+
     public List<String> getTopics() {
         return this.topics;
     }

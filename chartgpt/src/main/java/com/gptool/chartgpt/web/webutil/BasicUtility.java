@@ -37,6 +37,7 @@ public class BasicUtility implements ControllerUtility{
                 JsonNode response = restTemplate.postForObject(url, null,JsonNode.class, characteristics, options);
                 String responseString = tableService.parse(response);
                 Table table = tableService.jsonToTable(responseString);
+                tableService.saveTable(table);
                 return new ResponseEntity<>(response,HttpStatus.OK);
             }
             catch (HttpServerErrorException e){

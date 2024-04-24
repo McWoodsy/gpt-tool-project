@@ -135,6 +135,7 @@ def create_table(table_JSON):
     
     table.set_fontsize(14)
 
+
     # Hide axes
     ax.axis('off')
 

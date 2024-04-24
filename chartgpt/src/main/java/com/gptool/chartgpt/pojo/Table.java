@@ -8,7 +8,6 @@ public class Table {
 
     //private String name;
 
-
     //private List<Entry> entryList;
 
     @JsonProperty("topics")
@@ -45,6 +44,7 @@ public class Table {
     public void setOption(List<String> option) {
         this.option = option;
     }
+
 
 
 }

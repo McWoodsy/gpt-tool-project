@@ -16,7 +16,7 @@ public class TableRepoImpl implements TableRepository {
     
     @Override
     public void saveTable(Table table) {
-
+        System.out.println("TABLE SAVED");
     }
 }
 
