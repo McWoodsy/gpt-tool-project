@@ -21,7 +21,8 @@ def get_colors(text):
     """},
     {"role": "user", "content": " convert the following prompt into a json array of colors, with no newlines, just a pure json array: " + text},
     ],
-    max_tokens = 200)
+    max_tokens = 200
+    )
     return response.choices[0].message.content
 
 #   Competion call that returns a serialized JSON with title as key and key value pairs as value
@@ -41,14 +42,15 @@ def get_chart_info(option_list, metric):
     """},
     {"role": "user", "content": " in terms of " + metric + " compare " + option_list},
     ],
-    max_tokens = 200)
+    max_tokens = 200,
+    temperature = 0.5)
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
     return json.loads(response.choices[0].message.content)
 
 
 
 
-def get_table_info(option_list, characteristics_list):
+def get_table_infoALT(option_list, characteristics_list):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
         messages=[
      
@@ -70,7 +72,7 @@ def get_table_info(option_list, characteristics_list):
     return response.choices[0].message.content
 
 
-def get_table_infoALT(option_list, characteristics_list):
+def get_table_info(option_list, characteristics_list):
     response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
         messages=[
         {"role": "system", "content": """

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.gptool.chartgpt.service.TableService;
 import com.gptool.chartgpt.service.serviceutil.StringFormatter;
 import com.gptool.chartgpt.web.webutil.BasicUtility;
+import com.gptool.chartgpt.web.webutil.ControllerUtility;
 
 
 
@@ -20,7 +21,7 @@ import com.gptool.chartgpt.web.webutil.BasicUtility;
 public class ToolAPIController {
 
     @Autowired
-    private BasicUtility controllerUtility;
+    private ControllerUtility controllerUtility;
 
 
     @PostMapping("/createColorPalette/{query}")

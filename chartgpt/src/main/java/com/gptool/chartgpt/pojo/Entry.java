@@ -11,10 +11,10 @@ public class Entry {
     private List<String> topics;
     
     @JsonProperty("information")
-    private List<List<String>> information;
+    private List<String> information;
 
     @JsonProperty("options")
-    private List<String> options;
+    private String option;
 
     public List<String> getTopics() {
         return this.topics;
@@ -24,19 +24,19 @@ public class Entry {
         this.topics = topics;
     }
 
-    public List<List<String>> getInformation() {
+    public List<String> getInformation() {
         return this.information;
     }
 
-    public void setInformation(List<List<String>> information) {
+    public void setInformation(List<String> information) {
         this.information = information;
     }
 
-    public List<String> getOptions() {
-        return this.options;
+    public String getOptions() {
+        return this.option;
     }
 
-    public void setOptions(List<String> options) {
-        this.options = options;
+    public void setOptions(String option) {
+        this.option = option;
     }
 }

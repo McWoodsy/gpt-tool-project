@@ -13,5 +13,6 @@ public interface TableService {
     void renderTable(Table table);
     String parse(Object object);
     //  Requires casting
-    Object parseToObject(String src, Formatter.OutputObjectType outputObject);     
+    Object parseToObject(String src, Formatter.OutputObjectType outputObject); 
+       
 }

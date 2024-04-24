@@ -68,6 +68,8 @@ public class BasicUtility implements ControllerUtility{
         try {
           
             List<String> response = restTemplate.postForObject(url, null, List.class);
+            //  response should be saved to the json folder
+            System.out.println("\n\n\n ENDPOINT RESPONSE:           " + response.toString() + "\n\n\n");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         catch (HttpServerErrorException e){

@@ -10,5 +10,5 @@ public interface ControllerUtility {
     ResponseEntity<JsonNode> createTable(String characteristics, String options);
     ResponseEntity<String> createBarChart(String metric, String options);
     ResponseEntity<List<String>> createColorPalette(String query);
-
+    
 }
