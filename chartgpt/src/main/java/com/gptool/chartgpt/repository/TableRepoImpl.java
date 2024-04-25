@@ -18,7 +18,8 @@ public class TableRepoImpl implements TableRepository {
     
     @Override
     public void saveTable(String table) {
-        try (FileWriter fileWriter = new FileWriter("chartgpt/src/main/resources/static/json")) {
+        System.out.println("\n\nPreSave: " + table);
+        try (FileWriter fileWriter = new FileWriter("./src/main/resources/static/json/table_json.json")) {
             fileWriter.write(table);
         } catch (IOException e) {
         }

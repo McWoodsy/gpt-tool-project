@@ -31,6 +31,7 @@ public class TableServiceImpl implements TableService {
     @Override
     public void saveTable(Table table) throws JsonProcessingException {
         String tableString = JSONutil.objectMapper.writeValueAsString(tableToJson(table));
+
         tableRepository.saveTable(tableString);
     }
 
@@ -73,12 +74,18 @@ public class TableServiceImpl implements TableService {
         return JSONutil.jsonToTable(json);
     }
 
+    public List<com.gptool.chartgpt.pojo.Entry> tableToEntryList(Table table) throws JsonProcessingException {
+        return JSONutil.entryListMapper(table);
+    }
+
     //  Not needed
     public JsonNode tableToJson(Table table) throws JsonProcessingException {
         String tableString = JSONutil.objectMapper.writeValueAsString(table);
         JsonNode jsonNodeTable = (JsonNode)JSONutil.parse(tableString);
         return jsonNodeTable;
     }
+
+
 
 }
 
