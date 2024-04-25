@@ -79,9 +79,8 @@ def get_table_info(option_list, characteristics_list):
         YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You will be asked to compare 2 or more things to eachother in topics provided by the user.
         respond with a JSON of each of these topics in a list, and do the same with the options. The information lists should contain data 
         for each option on each topic. There should be quotation marks around each item in the information lists.
-        Each list under the "information" key must have quotations around it.
+        Each list under the "information" key must have quotations around it. NO BACKSLASHES OR ESCAPE CHARACTERS.
         Keep the information to the point (brief). Include pure data as the information. Like this:
-        {{
             "topics": [
                 "average body weight in kilos",
                 "number of feet"
@@ -105,37 +104,9 @@ def get_table_info(option_list, characteristics_list):
                 "whales"
             ]
         }
-
-
         """},
         {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
         ],
-        max_tokens = 200,
         temperature = 0.3)
     print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
     return response.choices[0].message.content
-
-
-'''        *topic*:[
-            *topic 1*,
-            *topic 2*,
-            *topic 3*
-            ],
-        *information* : [
-           "[ *information on topic 1 for option 1* e.g."20%",
-            *information on topic 1 for option 2* e.g. "40%",
-            *information on topic 1 for option 3* e.g. "32%",
-        ]",
-        "[
-            *information on topic 2 for option 1* e.g. Budapest, 
-            *information on topic 2 for option 2* e.g. Rome,
-            *information on topic 2 for option 3* e.g. Madrid,
-        ]",
-        ]
-        *options* : [
-            *option 1*,
-            *option 2*,
-            *option 3*
-        ]
-        }
-    }'''

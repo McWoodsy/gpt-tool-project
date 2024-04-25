@@ -33,7 +33,6 @@ public class JSONutil implements Formatter {
         } 
 }
 
-
     @Override
     public String parseToString(Object object) {
         try {
@@ -81,9 +80,5 @@ public class JSONutil implements Formatter {
         }
         return entryList;
     }
-
-
-    
-
-    }
+}
 

@@ -24,6 +24,8 @@ public class Entry {
         this.information = information;
     };
 
+    
+
     public List<String> getTopics() {
         return this.topics;
     }

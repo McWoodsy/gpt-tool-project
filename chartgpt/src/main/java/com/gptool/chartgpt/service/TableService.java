@@ -11,7 +11,7 @@ public interface TableService {
 
 
     Table getTable(String id);
-    void saveTable(Table table);
+    void saveTable(Table table)throws JsonProcessingException;
     void renderTable(Table table);
     String parse(Object object);
     //  Requires casting

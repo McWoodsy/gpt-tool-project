@@ -1,5 +1,6 @@
 package com.gptool.chartgpt.service;
 
+import java.util.List;
 import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -28,8 +29,9 @@ public class TableServiceImpl implements TableService {
     }
 
     @Override
-    public void saveTable(Table table) {
-        tableRepository.saveTable(table);
+    public void saveTable(Table table) throws JsonProcessingException {
+        String tableString = JSONutil.objectMapper.writeValueAsString(tableToJson(table));
+        tableRepository.saveTable(tableString);
     }
 
     @Override
@@ -65,14 +67,18 @@ public class TableServiceImpl implements TableService {
         }
         return new Object();
 
-
-
     }
 
     public Table jsonToTable(String json) throws JsonMappingException, JsonProcessingException {
         return JSONutil.jsonToTable(json);
     }
 
+    //  Not needed
+    public JsonNode tableToJson(Table table) throws JsonProcessingException {
+        String tableString = JSONutil.objectMapper.writeValueAsString(table);
+        JsonNode jsonNodeTable = (JsonNode)JSONutil.parse(tableString);
+        return jsonNodeTable;
+    }
 
 }
 
