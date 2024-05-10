@@ -4,6 +4,7 @@ from dotenv import dotenv_values
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import custom_utility
 
 
 config=dotenv_values(".env")
@@ -73,11 +74,11 @@ def get_table_infoALT(option_list, characteristics_list):
 
 
 def get_table_info(option_list, characteristics_list):
-    response = client.chat.completions.create(model="gpt-3.5-turbo-0125",
-        messages=[
+    response = client.chat.completions.create(model="gpt-4-turbo-2024-04-09",
+    messages=[
         {"role": "system", "content": """
         YOU WILL PROVIDE NO OUTPUT EXCEPT JSON. You will be asked to compare 2 or more things to eachother in topics provided by the user.
-        respond with a JSON of each of these topics in a list, and do the same with the options. The information lists should contain data 
+        Respond with a JSON of each of these topics in a list, and do the same with the options. The information lists should contain data 
         for each option on each topic. There should be quotation marks around each item in the information lists.
         Each list under the "information" key must have quotations around it. NO BACKSLASHES OR ESCAPE CHARACTERS.
         Keep the information to the point (brief). Include pure data as the information. Like this:
@@ -86,16 +87,16 @@ def get_table_info(option_list, characteristics_list):
                 "number of feet"
             ],
             "information": [
-                "[ "35-40 kg",
+                [ "35-40 kg",
                 "350-450 kg",
                 "4000-6000 kg",
                 "80000-130000 kg"
-                ]",
-                "[ "2 feet",
+                ],
+                [ "2 feet",
                 "4 feet",
                 "4 feet",
                 "0 feet"
-                ]"
+                ]
             ],
             "options": [
                 "penguins",
@@ -107,6 +108,31 @@ def get_table_info(option_list, characteristics_list):
         """},
         {"role": "user", "content": " in terms of " + characteristics_list + " compare " + option_list},
         ],
-        temperature = 0.3)
-    print("\n\n\n"+response.choices[0].message.content+"\n\n\n")
+        temperature = 0.3,
+        response_format={ "type": "json_object" }
+        )
+    json = response.choices[0].message.content
+    print("\n\n\nPRE FIX: "+json+"\n\n\n")
+
+    #json = custom_utility.remove_backslashes(json)
+    print("\n\n\nPOST FIX: "+json+"\n\n\n")
+
+    #formatted_json = format_json(json)
+    return json
+
+
+'''
+def format_json(json):
+    response = client.chat.completions.create(model="gpt-4-0125-preview",
+        messages=[
+            {"role": "system", "content": """
+                You will receive a json. you will remove the escape backslashes from it and return ONLY THE JSON and no other characters.
+            """},
+            {"role": "user", "content":  json } 
+            ],
+            temperature = 0.3,
+            # response_format={"type": "json_object"}
+            )
+    print("\n\n\POST FIX: "+response.choices[0].message.content+"\n\n\n")
     return response.choices[0].message.content
+    '''

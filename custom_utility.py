@@ -4,3 +4,10 @@ def url_deformatter(src):
 
 def url_formatter(src):
     return src.replace(" ","+")
+
+def remove_backslashes(src):
+    formatted_json = ""
+    for character in src:
+        if character != "\\":
+            formatted_json += character
+    return formatted_json

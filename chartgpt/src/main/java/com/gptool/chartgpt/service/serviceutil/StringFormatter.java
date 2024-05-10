@@ -18,4 +18,15 @@ public class StringFormatter implements Formatter{
         String formattedUrl = src.replaceAll(" ", "+");
         return formattedUrl;
     };
+
+    public static String removeBackslash(String src) {
+        char[] charArray = src.toCharArray();
+        StringBuilder formattedString = new StringBuilder();
+        for (char character : charArray) {
+            if (character != '\\') {
+                formattedString.append(character);
+            }
+        }
+        return formattedString.toString();
+    }
 }
