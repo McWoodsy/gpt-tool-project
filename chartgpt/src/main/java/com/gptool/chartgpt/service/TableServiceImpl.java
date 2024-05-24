@@ -1,7 +1,6 @@
 package com.gptool.chartgpt.service;
 
 import java.util.List;
-import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import com.gptool.chartgpt.pojo.Table;
 import com.gptool.chartgpt.repository.TableRepository;
 import com.gptool.chartgpt.service.serviceutil.Formatter;
 import com.gptool.chartgpt.service.serviceutil.JSONutil;
+import com.gptool.chartgpt.pojo.Entry;
 
 @Service
 @Primary
@@ -85,6 +85,24 @@ public class TableServiceImpl implements TableService {
         return jsonNodeTable;
     }
 
+    @Override
+    public List<com.gptool.chartgpt.pojo.Entry> jsonToEntryList(JsonNode json) throws JsonProcessingException {
+        return JSONutil.jsonToEntryList(json);
+    }
+
+    @Override
+    public void printEntries(List<Entry> entryList) {
+        for (Entry entry : entryList) {
+            List<String> topicList = entry.getTopics();
+            List<String> informationList = entry.getInformation();
+
+            System.out.println("\n\n\n" + entry.getOption() + ":\n");
+            for (int index = 0; index < topicList.size(); index++) {
+                System.out.println(topicList.get(index)+ ": " + informationList.get(index));
+            }
+   
+        }
+    }
 
 
 }

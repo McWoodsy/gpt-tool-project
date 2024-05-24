@@ -36,11 +36,11 @@ public class Entry {
         this.information = information;
     }
 
-    public String getOptions() {
+    public String getOption() {
         return this.option;
     }
 
-    public void setOptions(String option) {
+    public void setOption(String option) {
         this.option = option;
     }
 }

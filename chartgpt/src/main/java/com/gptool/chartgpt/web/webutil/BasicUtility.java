@@ -2,6 +2,7 @@ package com.gptool.chartgpt.web.webutil;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import com.gptool.chartgpt.pojo.Entry;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -36,6 +37,8 @@ public class BasicUtility implements ControllerUtility{
             String responseString = tableService.parse(response);
             Table table = tableService.jsonToTable(responseString);
             tableService.saveTable(table);
+            List<Entry> entryList = tableService.jsonToEntryList(response);
+            tableService.printEntries(entryList);
             return new ResponseEntity<>(response,HttpStatus.OK);
         }
         catch (HttpServerErrorException e){

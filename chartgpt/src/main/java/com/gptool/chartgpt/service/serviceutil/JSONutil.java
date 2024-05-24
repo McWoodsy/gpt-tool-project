@@ -66,29 +66,31 @@ public class JSONutil implements Formatter {
         String topicListString = (String) parseToString(topicListJsonNode);
         List<String> topicList = objectMapper.readValue(topicListString,new TypeReference<List<String>>(){});
 
-        //  Getting the list of information lists
-        JsonNode informationListJsonNode = tableJsonNode.get("information");
+        //  Getting the list of information lists !!!PROBLEM HERE!!!
+        JsonNode informationListJsonNode = tableJsonNode.get("information"); // This is a list of lists
         String informationListString = (String) parseToString(informationListJsonNode);
         List<List<String>> informationList = objectMapper.readValue(informationListString,new TypeReference<List<List<String>>>(){});
+        System.out.println(informationList);
+        System.out.println("OPTION LIST CHECK :   " + optionList);
+       // for (String option : optionList) {
+            //  for each topic, we add the indexed info to another information list (optionInfo). 
+            //  Then we construct the Entry object and add it to the list.
+            for (int i = 0; i < optionList.size(); i++) {
+                List<String> optionInfo = new ArrayList<>();
 
-        // For option in optionList we need a list of topics and a list of information (topics are same for all options but info 
-        // is not, hence the nested lists for info and not for topic)
-        for (int index = 0; index < optionList.size(); index++) {
-            //  For each option we need a list of info which we get from the list of lists
-            List<String> optionInfo = new ArrayList<>();
-            //  For indexed option get the indexed item in each list
-            for (List<String> informationSubList : informationList) {
-                // Add each piece of info in the nested info lists to the optionInfo list for each option
-                for (String information : informationSubList) {                
-                    optionInfo.add(information);
+                for (List<String> informationSubList : informationList) {
+                    optionInfo.add(informationSubList.get(i));
                 }
+                System.out.println("CHECK: " + optionList.get(i) + "\n" + topicList + " " + optionInfo);
+                entryList.add(new Entry(optionList.get(i), topicList, optionInfo));
             }
-            Entry entry = new Entry(optionList.get(index), topicList, optionInfo);
-            entryList.add(entry);
-        }
+
         return entryList;
     }
 
-    public 
+    public List<Entry> jsonToEntryList (JsonNode json) throws JsonProcessingException {
+        String jsonString = objectMapper.writeValueAsString(json);
+        return entryListMapper(jsonToTable(jsonString));
+    }
 }
 

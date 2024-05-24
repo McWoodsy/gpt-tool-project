@@ -1,7 +1,11 @@
 package com.gptool.chartgpt.service;
 
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.gptool.chartgpt.pojo.Entry;
 import com.gptool.chartgpt.pojo.Table;
 import com.gptool.chartgpt.service.serviceutil.Formatter;
 
@@ -17,5 +21,6 @@ public interface TableService {
     //  Requires casting
     Object parseToObject(String src, Formatter.OutputObjectType outputObject); 
     Table jsonToTable(String json) throws JsonMappingException, JsonProcessingException;
-       
+    List<com.gptool.chartgpt.pojo.Entry> jsonToEntryList(JsonNode json) throws JsonProcessingException; 
+    void printEntries(List<Entry> entryList);
 }
