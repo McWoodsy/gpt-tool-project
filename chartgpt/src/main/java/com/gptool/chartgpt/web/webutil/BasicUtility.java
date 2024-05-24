@@ -18,8 +18,6 @@ import com.gptool.chartgpt.service.serviceutil.StringFormatter;
 @Primary
 public class BasicUtility implements ControllerUtility{
 
-
-
     @Autowired
     private RestTemplate restTemplate;
 
@@ -27,29 +25,29 @@ public class BasicUtility implements ControllerUtility{
     private TableService tableService;
 
 
-        public ResponseEntity<JsonNode> createTable(String characteristics, String options) {
-            //  We need a util funciton to format the characteristics and options, or we can pass them in via the body
-            characteristics = StringFormatter.urlFormatter(characteristics);
-            options = StringFormatter.urlFormatter(options);
-            String url = "http://127.0.0.1:5000/table-generator/"+ characteristics + "/"+ options;
-            try {
-                //  For rendering, we dont need to return the response, but for making objects and storing it in repo we do need it returned
-                JsonNode response = restTemplate.postForObject(url, null,JsonNode.class, characteristics, options);
-                String responseString = tableService.parse(response);
-                Table table = tableService.jsonToTable(responseString);
-                tableService.saveTable(table);
-                return new ResponseEntity<>(response,HttpStatus.OK);
-            }
-            catch (HttpServerErrorException e){
-                System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    
-            }
-            catch (Exception e){
-                System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    public ResponseEntity<JsonNode> createTable(String characteristics, String options) {
+        //  We need a util funciton to format the characteristics and options, or we can pass them in via the body
+        characteristics = StringFormatter.urlFormatter(characteristics);
+        options = StringFormatter.urlFormatter(options);
+        String url = "http://127.0.0.1:5000/table-generator/"+ characteristics + "/"+ options;
+        try {
+            //  For rendering, we dont need to return the response, but for making objects and storing it in repo we do need it returned
+            JsonNode response = restTemplate.postForObject(url, null,JsonNode.class, characteristics, options);
+            String responseString = tableService.parse(response);
+            Table table = tableService.jsonToTable(responseString);
+            tableService.saveTable(table);
+            return new ResponseEntity<>(response,HttpStatus.OK);
         }
+        catch (HttpServerErrorException e){
+            System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getStatusCode() + "\n\n" + e.getMessage() + "\n\n\n");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+        catch (Exception e){
+            System.out.println("\n\n\nERROR *** exception thrown ***" + "\n\n" + e.getMessage() + "\n\n\n");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 

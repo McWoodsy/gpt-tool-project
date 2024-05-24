@@ -51,6 +51,7 @@ public class JSONutil implements Formatter {
 
     //  For now, to access Entrys we need to create a Table first
     public List<Entry> entryListMapper(Table table ) throws JsonProcessingException{
+
         List<Entry> entryList = new ArrayList<>();
         String tableString = objectMapper.writeValueAsString(table);
         JsonNode tableJsonNode = (JsonNode)parse(tableString);
@@ -87,5 +88,7 @@ public class JSONutil implements Formatter {
         }
         return entryList;
     }
+
+    public 
 }
 

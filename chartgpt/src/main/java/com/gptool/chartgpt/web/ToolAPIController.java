@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gptool.chartgpt.service.TableService;
 import com.gptool.chartgpt.service.serviceutil.StringFormatter;
 import com.gptool.chartgpt.web.webutil.BasicUtility;
@@ -22,6 +25,9 @@ public class ToolAPIController {
 
     @Autowired
     private ControllerUtility controllerUtility;
+
+    // @Autowired
+    // private ObjectMapper objectMapper;
 
 
     @PostMapping("/createColorPalette/{query}")
@@ -37,7 +43,16 @@ public class ToolAPIController {
 
 
     @PostMapping("/createTable/{characteristics}/{options}")
-    public ResponseEntity<JsonNode> createTable(@PathVariable String characteristics, @PathVariable String options) { 
+    public ResponseEntity<JsonNode> createTable(@PathVariable String characteristics, @PathVariable String options) throws JsonProcessingException { 
+        // ResponseEntity<JsonNode> responseResponseEntity = controllerUtility.createTable(characteristics, options);
+        // JsonNode response = responseResponseEntity.getBody();
+        // String reponseString = objectMapper.writeValueAsString(response);
+        
+
+        //  REASESS THE STRUCTURE AND GO DOWN THE LINE TO HAVE THIS HAPPENING LOWER DOWN
+        //  THEN ADD A PRINT STATEMENT SOMEWHERE TO VERIFY THAT EACH ENTRY OBJECT IS BEING CORRECTLY SAVED
+
+
         return controllerUtility.createTable(characteristics, options);
      
     }

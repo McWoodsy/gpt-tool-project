@@ -1,20 +1,15 @@
 package com.gptool.chartgpt.pojo;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Entry {
-
-    //public Map<Option,OptionInfo> entryMap;
   
-    @JsonProperty("topics")
+    //  This field is the same as on a Table object
     private List<String> topics;
     
-    @JsonProperty("information")
     private List<String> information;
 
-    //  Each Entry is just one option
-    //@JsonProperty("options")
+    //  Each Entry has just one option
     private String option;
 
     public Entry(){};
@@ -25,7 +20,6 @@ public class Entry {
         this.information = information;
     };
 
-    
     public List<String> getTopics() {
         return this.topics;
     }
