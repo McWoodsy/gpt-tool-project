@@ -13,7 +13,8 @@ public class Entry {
     @JsonProperty("information")
     private List<String> information;
 
-    @JsonProperty("options")
+    //  Each Entry is just one option
+    //@JsonProperty("options")
     private String option;
 
     public Entry(){};
@@ -25,7 +26,6 @@ public class Entry {
     };
 
     
-
     public List<String> getTopics() {
         return this.topics;
     }

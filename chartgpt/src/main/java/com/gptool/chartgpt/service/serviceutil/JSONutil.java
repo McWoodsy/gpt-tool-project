@@ -54,6 +54,7 @@ public class JSONutil implements Formatter {
         List<Entry> entryList = new ArrayList<>();
         String tableString = objectMapper.writeValueAsString(table);
         JsonNode tableJsonNode = (JsonNode)parse(tableString);
+
         // Getting just the list of options
         JsonNode optionListJsonNode = tableJsonNode.get("options");
         String optionListString = (String) parseToString(optionListJsonNode);
@@ -65,15 +66,21 @@ public class JSONutil implements Formatter {
         List<String> topicList = objectMapper.readValue(topicListString,new TypeReference<List<String>>(){});
 
         //  Getting the list of information lists
-        JsonNode informationListJsonNode = tableJsonNode.get("topics");
+        JsonNode informationListJsonNode = tableJsonNode.get("information");
         String informationListString = (String) parseToString(informationListJsonNode);
         List<List<String>> informationList = objectMapper.readValue(informationListString,new TypeReference<List<List<String>>>(){});
 
+        // For option in optionList we need a list of topics and a list of information (topics are same for all options but info 
+        // is not, hence the nested lists for info and not for topic)
         for (int index = 0; index < optionList.size(); index++) {
+            //  For each option we need a list of info which we get from the list of lists
             List<String> optionInfo = new ArrayList<>();
             //  For indexed option get the indexed item in each list
-            for (List<String> information : informationList) {
-                optionInfo.add(information.get(index));
+            for (List<String> informationSubList : informationList) {
+                // Add each piece of info in the nested info lists to the optionInfo list for each option
+                for (String information : informationSubList) {                
+                    optionInfo.add(information);
+                }
             }
             Entry entry = new Entry(optionList.get(index), topicList, optionInfo);
             entryList.add(entry);

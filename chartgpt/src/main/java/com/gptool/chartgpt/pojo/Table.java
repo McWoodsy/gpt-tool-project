@@ -6,10 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Table {
 
-    //private String name;
-
-    //private List<Entry> entryList;
-
     @JsonProperty("topics")
     private List<String> topics;
     
